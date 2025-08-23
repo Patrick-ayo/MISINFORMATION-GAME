@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Deep research and analysis on misinformation topics">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <title>Deep Research - Misinformation Awareness Platform</title>
+</head>
+<body data-theme="light">
+    <header class="bg-[#057087] text-white p-4 pixel-border relative">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="text-lg md:text-xl">MISINFO AWARENESS</div>
+            
+            <!-- Desktop Navigation -->
+            <nav class="desktop-nav hidden md:flex space-x-6">
+                <a href="index.html" class="nav-link hover:text-[#F38833] transition-colors">HOME</a>
+                <a href="index.html#fact-check" class="nav-link hover:text-[#F38833] transition-colors">FACT CHECK</a>
+                <a href="index.html#game" class="nav-link hover:text-[#F38833] transition-colors">GAME</a>
+                <a href="index.html#resources" class="nav-link hover:text-[#F38833] transition-colors">RESOURCES</a>
+                <button class="theme-toggle" onclick="toggleTheme()">
+                    <i class="fas fa-moon" id="theme-icon"></i>
+                </button>
+            </nav>
+            
+            <!-- Mobile Hamburger Menu -->
+            <button class="hamburger-menu pixel-border" onclick="toggleMobileNav()">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        
+        <!-- Mobile Navigation -->
+        <nav class="mobile-nav nav-hidden pixel-border">
+            <a href="index.html" class="text-white hover:text-[#F38833] transition-colors">HOME</a>
+            <a href="index.html#fact-check" class="text-white hover:text-[#F38833] transition-colors">FACT CHECK</a>
+            <a href="index.html#game" class="text-white hover:text-[#F38833] transition-colors">GAME</a>
+            <a href="index.html#resources" class="text-white hover:text-[#F38833] transition-colors">RESOURCES</a>
+            <button class="theme-toggle w-full text-left mt-4" onclick="toggleTheme()">
+                <i class="fas fa-moon" id="theme-icon-mobile"></i> change theme
+            </button>
+        </nav>
+    </header>
+
+    <main class="flex-1">
+        <!-- Research Header -->
+        <section class="hero-section">
+            <div class="container mx-auto">
+                <h1 class="text-2xl md:text-4xl font-bold mb-6">🔍 DEEP RESEARCH</h1>
+                <p class="text-sm md:text-base mb-6">Comprehensive analysis and investigation of misinformation topics</p>
+                <div class="research-topic-banner pixel-border mb-8">
+                    <p class="text-sm">📚 RESEARCHING: <span id="research-topic-display">Current Topic</span></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Research Content -->
+        <section class="p-6 md:p-10 bg-[#F0EDE3]">
+            <div class="container mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    
+                    <!-- Sources Section -->
+                    <div class="research-section pixel-border p-6 bg-white">
+                        <h3 class="text-lg font-bold mb-4 text-[#BC2231] flex items-center">
+                            <span class="mr-3">🔍</span> FIND MORE SOURCES
+                        </h3>
+                        <div class="source-list space-y-3">
+                            <div class="source-item p-3 bg-[#F0EDE3] border-l-4 border-[#54B0BF]">
+                                <h4 class="font-bold text-sm text-[#057087]">FactCheck.org</h4>
+                                <p class="text-xs text-[#444444]">Nonpartisan fact-checking website</p>
+                                <a href="#" class="text-[#F38833] text-xs hover:underline">Visit Source →</a>
+                            </div>
+                            <div class="source-item p-3 bg-[#F0EDE3] border-l-4 border-[#54B0BF]">
+                                <h4 class="font-bold text-sm text-[#057087]">Snopes</h4>
+                                <p class="text-xs text-[#444444]">Internet reference source for urban legends</p>
+                                <a href="#" class="text-[#F38833] text-xs hover:underline">Visit Source →</a>
+                            </div>
+                            <div class="source-item p-3 bg-[#F0EDE3] border-l-4 border-[#54B0BF]">
+                                <h4 class="font-bold text-sm text-[#057087]">Reuters Fact Check</h4>
+                                <p class="text-xs text-[#444444]">Professional fact-checking service</p>
+                                <a href="#" class="text-[#F38833] text-xs hover:underline">Visit Source →</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Related Topics -->
+                    <div class="research-section pixel-border p-6 bg-white">
+                        <h3 class="text-lg font-bold mb-4 text-[#BC2231] flex items-center">
+                            <span class="mr-3">🔗</span> RELATED TOPICS
+                        </h3>
+                        <div class="topics-grid grid grid-cols-2 gap-3">
+                            <div class="topic-item p-3 bg-[#54B0BF] text-white text-center rounded cursor-pointer hover:bg-[#F38833] transition-colors">
+                                <span class="text-xs">Deepfakes</span>
+                            </div>
+                            <div class="topic-item p-3 bg-[#54B0BF] text-white text-center rounded cursor-pointer hover:bg-[#F38833] transition-colors">
+                                <span class="text-xs">Social Media</span>
+                            </div>
+                            <div class="topic-item p-3 bg-[#54B0BF] text-white text-center rounded cursor-pointer hover:bg-[#F38833] transition-colors">
+                                <span class="text-xs">Election Claims</span>
+                            </div>
+                            <div class="topic-item p-3 bg-[#54B0BF] text-white text-center rounded cursor-pointer hover:bg-[#F38833] transition-colors">
+                                <span class="text-xs">Health Myths</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Section -->
+                    <div class="research-section pixel-border p-6 bg-white md:col-span-2">
+                        <h3 class="text-lg font-bold mb-4 text-[#BC2231] flex items-center">
+                            <span class="mr-3">📅</span> TIMELINE OF CLAIMS
+                        </h3>
+                        <div class="timeline-container relative">
+                            <div class="timeline-line absolute left-4 top-0 bottom-0 w-1 bg-[#54B0BF]"></div>
+                            <div class="timeline-events space-y-4">
+                                <div class="timeline-event flex items-start">
+                                    <div class="timeline-dot w-3 h-3 bg-[#F38833] rounded-full absolute left-3 mt-2"></div>
+                                    <div class="timeline-content ml-8">
+                                        <h4 class="font-bold text-sm text-[#057087]">Claim First Appears</h4>
+                                        <p class="text-xs text-[#444444]">Initial spread on social media platforms</p>
+                                        <span class="text-xs text-[#F38833]">2 weeks ago</span>
+                                    </div>
+                                </div>
+                                <div class="timeline-event flex items-start">
+                                    <div class="timeline-dot w-3 h-3 bg-[#BC2231] rounded-full absolute left-3 mt-2"></div>
+                                    <div class="timeline-content ml-8">
+                                        <h4 class="font-bold text-sm text-[#057087]">Fact-Checking Response</h4>
+                                        <p class="text-xs text-[#444444]">Major fact-checking organizations debunk claim</p>
+                                        <span class="text-xs text-[#BC2231]">1 week ago</span>
+                                    </div>
+                                </div>
+                                <div class="timeline-event flex items-start">
+                                    <div class="timeline-dot w-3 h-3 bg-[#54B0BF] rounded-full absolute left-3 mt-2"></div>
+                                    <div class="timeline-content ml-8">
+                                        <h4 class="font-bold text-sm text-[#057087]">Current Status</h4>
+                                        <p class="text-xs text-[#444444]">Claim continues to circulate despite debunking</p>
+                                        <span class="text-xs text-[#54B0BF]">Today</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Expert Opinions -->
+                    <div class="research-section pixel-border p-6 bg-white md:col-span-2">
+                        <h3 class="text-lg font-bold mb-4 text-[#BC2231] flex items-center">
+                            <span class="mr-3">👨‍💼</span> EXPERT OPINIONS
+                        </h3>
+                        <div class="experts-grid grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="expert-card p-4 bg-[#F0EDE3] border-2 border-[#54B0BF] rounded">
+                                <div class="expert-avatar w-12 h-12 bg-[#54B0BF] rounded-full mx-auto mb-3 flex items-center justify-center">
+                                    <i class="fas fa-user text-white"></i>
+                                </div>
+                                <h4 class="font-bold text-sm text-[#057087] text-center">Dr. Sarah Chen</h4>
+                                <p class="text-xs text-[#444444] text-center mb-2">Media Literacy Researcher</p>
+                                <p class="text-xs text-[#444444] italic">"This type of misinformation follows classic patterns of emotional manipulation and confirmation bias."</p>
+                            </div>
+                            <div class="expert-card p-4 bg-[#F0EDE3] border-2 border-[#54B0BF] rounded">
+                                <div class="expert-avatar w-12 h-12 bg-[#54B0BF] rounded-full mx-auto mb-3 flex items-center justify-center">
+                                    <i class="fas fa-user text-white"></i>
+                                </div>
+                                <h4 class="font-bold text-sm text-[#057087] text-center">Prof. James Wilson</h4>
+                                <p class="text-xs text-[#444444] text-center mb-2">Digital Forensics Expert</p>
+                                <p class="text-xs text-[#444444] italic">"The technical analysis reveals clear signs of digital manipulation and fabrication."</p>
+                            </div>
+                            <div class="expert-card p-4 bg-[#F0EDE3] border-2 border-[#54B0BF] rounded">
+                                <div class="expert-avatar w-12 h-12 bg-[#54B0BF] rounded-full mx-auto mb-3 flex items-center justify-center">
+                                    <i class="fas fa-user text-white"></i>
+                                </div>
+                                <h4 class="font-bold text-sm text-[#057087] text-center">Dr. Maria Rodriguez</h4>
+                                <p class="text-xs text-[#444444] text-center mb-2">Psychology Professor</p>
+                                <p class="text-xs text-[#444444] italic">"Understanding why people believe and share misinformation is crucial for prevention."</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="text-center mt-8">
+                    <button class="px-6 py-3 bg-[#BC2231] text-white hover-button text-sm md:text-base mr-4" onclick="window.history.back()">
+                        ← GO BACK
+                    </button>
+                    <button class="px-6 py-3 bg-[#057087] text-white hover-button text-sm md:text-base" onclick="shareResearch()">
+                        📤 SHARE RESEARCH
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-[#057087] text-white p-6 pixel-border">
+        <div class="container mx-auto text-center">
+            <p class="text-sm">© 2024 Misinformation Awareness Platform - Deep Research Module</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Get research topic from URL parameters
+        function getResearchTopic() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const topic = urlParams.get('topic') || 'Current Topic';
+            document.getElementById('research-topic-display').textContent = topic;
+        }
+
+        // Share research functionality
+        function shareResearch() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Deep Research on Misinformation',
+                    text: 'Check out this comprehensive research on misinformation topics',
+                    url: window.location.href
+                });
+            } else {
+                // Fallback for browsers that don't support Web Share API
+                navigator.clipboard.writeText(window.location.href).then(() => {
+                    alert('Research link copied to clipboard!');
+                });
+            }
+        }
+
+        // Initialize research page
+        document.addEventListener('DOMContentLoaded', function() {
+            getResearchTopic();
+        });
+    </script>
+</body>
+</html>
