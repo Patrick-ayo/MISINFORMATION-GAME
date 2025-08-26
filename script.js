@@ -289,7 +289,7 @@ async function verifyClaim() {
     }
 
     // Send to your backend
-    const response = await fetch("http://localhost:5000/api/chatbot", {
+    const response = await fetch("http://localhost:5000/chatbot", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ message }),
@@ -460,7 +460,7 @@ input.addEventListener("keypress", async function (e) {
 
     // Send message to backend
     try {
-      const response = await fetch("http://localhost:5000/api/chatbot", {
+      const response = await fetch("http://localhost:5000/chatbot", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: msg }),
