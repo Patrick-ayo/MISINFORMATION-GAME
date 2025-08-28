@@ -431,6 +431,29 @@ document.addEventListener("click", function (event) {
 
 // Initialize image upload when DOM is loaded
 document.addEventListener("DOMContentLoaded", function () {
+  // Inject page-specific CSS file based on current page
+  try {
+    const head = document.head;
+    const file = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+    const map = {
+      '': 'home.css',
+      'index.html': 'home.css',
+      'research.html': 'research.css',
+      'fact-check.html': 'fact-check.css',
+      'game.html': 'game.css',
+      'resources.html': 'resources.css'
+    };
+    const cssFile = map[file] || null;
+    if (cssFile) {
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = cssFile;
+      head.appendChild(link);
+    }
+  } catch (e) {
+    console.warn('Page CSS injection failed:', e);
+  }
+
   initializeImageUpload();
 });
 

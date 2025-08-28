@@ -3,65 +3,72 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="Educational platform to combat misinformation with a fact-checking chatbot and interactive games."
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-      integrity="sha512-SzlrxWriC3z8j0t2Qf3x+6QJzQOzF1O1zW6E6p6TtFv6Nf5L5p5np5D+VtZ5r6eZjJ0T1eU6+z+zF6+zF6Ck1A=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
-      rel="stylesheet"
-    />
-
+    <meta name="description" content="Educational platform to combat misinformation with a fact-checking chatbot and interactive games." />
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link rel="stylesheet" href="styles.css" />
-    <title>Misinformation Awareness Platform</title>
+    <title>MISINFO</title>
   </head>
   <body data-theme="light">
+    <!-- Background Video -->
+    <div class="video-background" aria-hidden="true">
+      <video class="video-background-media" src="animation.mp4" autoplay muted loop playsinline></video>
+      <div class="video-overlay"></div>
+    </div>
+
     <header class="bg-[#057087] text-white p-4 pixel-border relative">
       <div class="container mx-auto flex justify-between items-center">
-        <div class="text-lg md:text-xl">MISINFO AWARENESS</div>
+        <!-- Hoverable MISINFO logo -->
+        <div class="logo-container">
+          <div class="concept concept-two">
+            <div class="hover"><h1>M</h1></div>
+            <div class="hover"><h1>I</h1></div>
+            <div class="hover"><h1>S</h1></div>
+            <div class="hover"><h1>I</h1></div>
+            <div class="hover"><h1>N</h1></div>
+            <div class="hover"><h1>F</h1></div>
+            <div class="hover"><h1>O</h1></div>
+          </div>
+        </div>
 
-        <!-- Desktop Navigation -->
+        <!-- Desktop Navigation (sparkle effect) -->
         <nav class="desktop-nav hidden md:flex space-x-6">
-          <a href="#" class="nav-link hover:text-[#F38833] transition-colors"
-            >HOME</a
-          >
-          <a
-            href="#fact-check"
-            class="nav-link hover:text-[#F38833] transition-colors"
-            >FACT CHECK</a
-          >
-          <a
-            href="#game"
-            class="nav-link hover:text-[#F38833] transition-colors"
-            >GAME</a
-          >
-          <a
-            href="#resources"
-            class="nav-link hover:text-[#F38833] transition-colors"
-            >RESOURCES</a
-          >
-          <button class="theme-toggle" onclick="toggleTheme()">
-            <i class="fas fa-moon" id="theme-icon"></i>
-          </button>
+          <a href="index.html" class="nav-link">
+            <svg viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M93.781 51.578C95 50.969 96 49.359 96 48c0-1.375-1-2.969-2.219-3.578 0 0-22.868-1.514-31.781-10.422-8.915-8.91-10.438-31.781-10.438-31.781C50.969 1 49.375 0 48 0s-2.969 1-3.594 2.219c0 0-1.5 22.87-10.406 31.781-8.908 8.913-31.781 10.422-31.781 10.422C1 45.031 0 46.625 0 48c0 1.359 1 2.969 2.219 3.578 0 0 22.873 1.51 31.781 10.422 8.906 8.911 10.406 31.781 10.406 31.781C45.031 95 46.625 96 48 96s2.969-1 3.562-2.219c0 0 1.523-22.871 10.438-31.781 8.913-8.908 31.781-10.422 31.781-10.422Z" fill="#000"/></svg>
+            <svg viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M93.781 51.578C95 50.969 96 49.359 96 48c0-1.375-1-2.969-2.219-3.578 0 0-22.868-1.514-31.781-10.422-8.915-8.91-10.438-31.781-10.438-31.781C50.969 1 49.375 0 48 0s-2.969 1-3.594 2.219c0 0-1.5 22.87-10.406 31.781-8.908 8.913-31.781 10.422-31.781 10.422C1 45.031 0 46.625 0 48c0 1.359 1 2.969 2.219 3.578 0 0 22.873 1.51 31.781 10.422 8.906 8.911 10.406 31.781 10.406 31.781C45.031 95 46.625 96 48 96s2.969-1 3.562-2.219c0 0 1.523-22.871 10.438-31.781 8.913-8.908 31.781-10.422 31.781-10.422Z" fill="#000"/></svg>
+            <span>HOME</span>
+            <span aria-hidden="true">HOME</span>
+          </a>
+          <a href="fact-check.html" class="nav-link">
+            <svg viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M93.781 51.578C95 50.969 96 49.359 96 48c0-1.375-1-2.969-2.219-3.578 0 0-22.868-1.514-31.781-10.422-8.915-8.91-10.438-31.781-10.438-31.781C50.969 1 49.375 0 48 0s-2.969 1-3.594 2.219c0 0-1.5 22.87-10.406 31.781-8.908 8.913-31.781 10.422-31.781 10.422C1 45.031 0 46.625 0 48c0 1.359 1 2.969 2.219 3.578 0 0 22.873 1.51 31.781 10.422 8.906 8.911 10.406 31.781 10.406 31.781C45.031 95 46.625 96 48 96s2.969-1 3.562-2.219c0 0 1.523-22.871 10.438-31.781 8.913-8.908 31.781-10.422 31.781-10.422Z" fill="#000"/></svg>
+            <svg viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M93.781 51.578C95 50.969 96 49.359 96 48c0-1.375-1-2.969-2.219-3.578 0 0-22.868-1.514-31.781-10.422-8.915-8.91-10.438-31.781-10.438-31.781C50.969 1 49.375 0 48 0s-2.969 1-3.594 2.219c0 0-1.5 22.87-10.406 31.781-8.908 8.913-31.781 10.422-31.781 10.422C1 45.031 0 46.625 0 48c0 1.359 1 2.969 2.219 3.578 0 0 22.873 1.51 31.781 10.422 8.906 8.911 10.406 31.781 10.406 31.781C45.031 95 46.625 96 48 96s2.969-1 3.562-2.219c0 0 1.523-22.871 10.438-31.781 8.913-8.908 31.781-10.422 31.781-10.422Z" fill="#000"/></svg>
+            <span>FACT CHECK</span>
+            <span aria-hidden="true">FACT CHECK</span>
+          </a>
+          <a href="game.html" class="nav-link">
+            <svg viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M93.781 51.578C95 50.969 96 49.359 96 48c0-1.375-1-2.969-2.219-3.578 0 0-22.868-1.514-31.781-10.422-8.915-8.91-10.438-31.781-10.438-31.781C50.969 1 49.375 0 48 0s-2.969 1-3.594 2.219c0 0-1.5 22.87-10.406 31.781-8.908 8.913-31.781 10.422-31.781 10.422C1 45.031 0 46.625 0 48c0 1.359 1 2.969 2.219 3.578 0 0 22.873 1.51 31.781 10.422 8.906 8.911 10.406 31.781 10.406 31.781C45.031 95 46.625 96 48 96s2.969-1 3.562-2.219c0 0 1.523-22.871 10.438-31.781 8.913-8.908 31.781-10.422 31.781-10.422Z" fill="#000"/></svg>
+            <svg viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M93.781 51.578C95 50.969 96 49.359 96 48c0-1.375-1-2.969-2.219-3.578 0 0-22.868-1.514-31.781-10.422-8.915-8.91-10.438-31.781-10.438-31.781C50.969 1 49.375 0 48 0s-2.969 1-3.594 2.219c0 0-1.5 22.87-10.406 31.781-8.908 8.913-31.781 10.422-31.781 10.422C1 45.031 0 46.625 0 48c0 1.359 1 2.969 2.219 3.578 0 0 22.873 1.51 31.781 10.422 8.906 8.911 10.406 31.781 10.406 31.781C45.031 95 46.625 96 48 96s2.969-1 3.562-2.219c0 0 1.523-22.871 10.438-31.781 8.913-8.908 31.781-10.422 31.781-10.422Z" fill="#000"/></svg>
+            <span>GAME</span>
+            <span aria-hidden="true">GAME</span>
+          </a>
+          <a href="resources.html" class="nav-link">
+            <svg viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M93.781 51.578C95 50.969 96 49.359 96 48c0-1.375-1-2.969-2.219-3.578 0 0-22.868-1.514-31.781-10.422-8.915-8.91-10.438-31.781-10.438-31.781C50.969 1 49.375 0 48 0s-2.969 1-3.594 2.219c0 0-1.5 22.87-10.406 31.781-8.908 8.913-31.781 10.422-31.781 10.422C1 45.031 0 46.625 0 48c0 1.359 1 2.969 2.219 3.578 0 0 22.873 1.51 31.781 10.422 8.906 8.911 10.406 31.781 10.406 31.781C45.031 95 46.625 96 48 96s2.969-1 3.562-2.219c0 0 1.523-22.871 10.438-31.781 8.913-8.908 31.781-10.422 31.781-10.422Z" fill="#000"/></svg>
+            <svg viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M93.781 51.578C95 50.969 96 49.359 96 48c0-1.375-1-2.969-2.219-3.578 0 0-22.868-1.514-31.781-10.422-8.915-8.91-10.438-31.781-10.438-31.781C50.969 1 49.375 0 48 0s-2.969 1-3.594 2.219c0 0-1.5 22.87-10.406 31.781-8.908 8.913-31.781 10.422-31.781 10.422C1 45.031 0 46.625 0 48c0 1.359 1 2.969 2.219 3.578 0 0 22.873 1.51 31.781 10.422 8.906 8.911 10.406 31.781 10.406 31.781C45.031 95 46.625 96 48 96s2.969-1 3.562-2.219c0 0 1.523-22.871 10.438-31.781 8.913-8.908 31.781-10.422 31.781-10.422Z" fill="#000"/></svg>
+            <span>RESOURCES</span>
+            <span aria-hidden="true">RESOURCES</span>
+          </a>
+
+          <!-- Login button (slide animation) -->
+          <div class="button">
+            <input type="checkbox" id="login-button" />
+            <label for="login-button">
+              <div class="button_inner">
+                <i class="l fas fa-sign-in-alt"></i>
+                <span class="t">LOGIN</span>
+              </div>
+            </label>
+          </div>
         </nav>
 
         <!-- Mobile Hamburger Menu -->
@@ -72,53 +79,32 @@
 
       <!-- Mobile Navigation -->
       <nav class="mobile-nav nav-hidden pixel-border">
-        <a href="#" class="text-white hover:text-[#F38833] transition-colors"
-          >HOME</a
-        >
-        <a
-          href="#fact-check"
-          class="text-white hover:text-[#F38833] transition-colors"
-          >FACT CHECK</a
-        >
-        <a
-          href="#game"
-          class="text-white hover:text-[#F38833] transition-colors"
-          >GAME</a
-        >
-        <a
-          href="#resources"
-          class="text-white hover:text-[#F38833] transition-colors"
-          >RESOURCES</a
-        >
-        <button
-          class="theme-toggle w-full text-left mt-4"
-          onclick="toggleTheme()"
-        >
-          <i class="fas fa-moon" id="theme-icon-mobile"></i> change theme
-        </button>
+        <a href="index.html" class="text-white hover:text-[#F38833] transition-colors">HOME</a>
+        <a href="fact-check.html" class="text-white hover:text-[#F38833] transition-colors">FACT CHECK</a>
+        <a href="game.html" class="text-white hover:text-[#F38833] transition-colors">GAME</a>
+        <a href="resources.html" class="text-white hover:text-[#F38833] transition-colors">RESOURCES</a>
+        <div class="button mobile-login-btn">
+          <input type="checkbox" id="mobile-login-button" />
+          <label for="mobile-login-button">
+            <div class="button_inner">
+              <i class="l fas fa-sign-in-alt"></i>
+              <span class="t">LOGIN</span>
+            </div>
+          </label>
+        </div>
       </nav>
     </header>
 
     <main class="flex-1">
-      <!-- Hero Section with Misinformation Focus -->
+      <!-- Hero (Home) -->
       <section class="hero-section">
         <div class="container mx-auto">
-          <h1 class="text-2xl md:text-4xl font-bold mb-6">
-            FIGHT MISINFORMATION
-          </h1>
-          <p class="text-sm md:text-base mb-6">
-            Join the battle against fake news and digital deception
-          </p>
+          <h1 class="text-2xl md:text-4xl font-bold mb-6">FIGHT MISINFORMATION</h1>
+          <p class="text-sm md:text-base mb-6">Join the battle against fake news and digital deception</p>
           <div class="warning-banner pixel-border mb-8">
-            <p class="text-sm">
-              ⚠️ 70% of internet users encounter misinformation weekly
-            </p>
+            <p class="text-sm">⚠️ 70% of internet users encounter misinformation weekly</p>
           </div>
-          <button
-            class="px-6 py-3 bg-[#BC2231] text-white hover-button text-sm md:text-base"
-          >
-            LEARN TO SPOT FAKE NEWS
-          </button>
+          <a href="fact-check.html" class="px-6 py-3 bg-[#BC2231] text-white hover-button text-sm md:text-base inline-block">LEARN TO SPOT FAKE NEWS</a>
         </div>
       </section>
 
@@ -129,9 +115,7 @@
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div class="p-4 bg-white pixel-border">
               <div class="stat-number">64%</div>
-              <div class="stat-label">
-                of fake news spreads faster than truth
-              </div>
+              <div class="stat-label">of fake news spreads faster than truth</div>
             </div>
             <div class="p-4 bg-white pixel-border">
               <div class="stat-number">85%</div>
@@ -145,252 +129,26 @@
         </div>
       </section>
 
-      <!-- Fact Check Section -->
-      <section id="fact-check" class="fact-check-section">
-        <div class="container mx-auto">
-          <h2
-            class="text-xl md:text-2xl font-bold text-center mb-8 text-[#057087]"
-          >
-            REAL-TIME FACT CHECKER
-          </h2>
-          <div class="bg-white p-6 pixel-border max-w-2xl mx-auto">
-            <p class="text-center text-[#BC2231] text-sm mb-4">
-              Verify any claim instantly against trusted sources
-            </p>
-
-            <!-- Text Input -->
-            <input
-              type="text"
-              placeholder="PASTE SUSPICIOUS CLAIM HERE..."
-              class="chat-input w-full p-4 mb-4"
-              aria-label="Fact-check input"
-              id="fact-check-input"
-            />
-
-            <!-- Image Upload Area -->
-            <div class="image-upload-area mb-4" id="image-upload-area">
-              <div class="upload-zone" id="upload-zone">
-                <div class="upload-icon">
-                  <i class="fas fa-cloud-upload-alt"></i>
-                </div>
-                <p class="upload-text">
-                  Drag & drop an image here or click to browse
-                </p>
-                <p class="upload-hint">
-                  Supports: JPG, PNG, GIF, WebP (Max: 5MB)
-                </p>
-                <input
-                  type="file"
-                  id="image-input"
-                  accept="image/*"
-                  class="hidden-input"
-                />
-              </div>
-              <div class="uploaded-image hidden" id="uploaded-image">
-                <img id="preview-image" src="" alt="Uploaded image" />
-                <button class="remove-image-btn" onclick="removeImage()">
-                  <i class="fas fa-times"></i>
-                </button>
-              </div>
-            </div>
-
-            <button
-              class="w-full px-6 py-3 bg-[#057087] text-white hover-button text-sm md:text-base"
-              onclick="verifyClaim()"
-            >
-              VERIFY CLAIM
-            </button>
-
-            <div
-              class="mt-6 p-4 bg-[#F0EDE3] border-2 border-dashed border-[#54B0BF]"
-              aria-live="polite"
-              id="results-display"
-            >
-              <p class="text-center text-[#057087]">
-                Verification results will appear here...
-              </p>
-
-              <!-- Research More Prompt -->
-              <div
-                class="research-prompt mt-4"
-                id="research-prompt"
-                style="display: none"
-              >
-                <div class="research-header text-center mb-3">
-                  <h4 class="text-sm font-bold text-[#BC2231] mb-1">
-                    Deep Dive: <span id="current-topic">Current Topic</span>
-                  </h4>
-                  <p class="text-xs text-[#057087]">3 exchanges so far</p>
-                </div>
-
-                <div
-                  class="research-buttons grid grid-cols-1 md:grid-cols-3 gap-3"
-                >
-                  <button
-                    class="research-btn"
-                    onclick="redirectToResearch('sources')"
-                  >
-                    <span class="research-icon">🔍</span>
-                    <span class="research-label"
-                      >Research More About This Topic</span
-                    >
-                  </button>
-                  <button
-                    class="research-btn"
-                    onclick="redirectToResearch('questions')"
-                  >
-                    <span class="research-icon">❓</span>
-                    <span class="research-label">Ask Related Question</span>
-                  </button>
-                  <button
-                    class="research-btn"
-                    onclick="redirectToResearch('cases')"
-                  >
-                    <span class="research-icon">📊</span>
-                    <span class="research-label">See Similar Cases</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <!-- Research Panel -->
-            <div class="research-panel" id="research-panel">
-              <div class="research-panel-content">
-                <div class="research-panel-header">
-                  <h3 class="research-panel-title" id="research-panel-title">
-                    Deep Dive Panel
-                  </h3>
-                  <button
-                    class="close-research-btn"
-                    onclick="closeResearchPanel()"
-                  >
-                    <i class="fas fa-times"></i>
-                  </button>
-                </div>
-
-                <div class="research-cards">
-                  <div class="research-card">
-                    <div class="card-icon">🔍</div>
-                    <h4 class="card-title">Find More Sources</h4>
-                    <p class="card-description">
-                      Discover additional fact-checking resources and
-                      verification tools
-                    </p>
-                  </div>
-
-                  <div class="research-card">
-                    <div class="card-icon">🔗</div>
-                    <h4 class="card-title">Related Topics</h4>
-                    <p class="card-description">
-                      Explore connected subjects and related misinformation
-                      patterns
-                    </p>
-                  </div>
-
-                  <div class="research-card">
-                    <div class="card-icon">📅</div>
-                    <h4 class="card-title">Timeline of Claims</h4>
-                    <p class="card-description">
-                      Track the evolution and spread of this claim over time
-                    </p>
-                  </div>
-
-                  <div class="research-card">
-                    <div class="card-icon">👨‍💼</div>
-                    <h4 class="card-title">Expert Opinions</h4>
-                    <p class="card-description">
-                      Get insights from fact-checking experts and researchers
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Game Section -->
-      <section id="game" class="p-6 md:p-10 bg-[#F0EDE3]">
-        <div class="container mx-auto">
-          <h2
-            class="text-xl md:text-2xl font-bold text-center mb-6 text-[#057087]"
-          >
-            MISINFO DETECTION GAME
-          </h2>
-          <p class="text-center text-sm text-[#BC2231] mb-6">
-            Test your skills at spotting fake news in this interactive challenge
-          </p>
-          <div class="game-placeholder" onclick="enterFullscreenGame()">
-            <p class="text-lg md:text-xl mb-4">
-              🎮 CLICK TO PLAY MISINFO DETECTOR 🎮
-            </p>
-            <p class="text-sm md:text-base">Fullscreen immersive experience</p>
-            <p class="text-xs mt-4 text-[#057087]">
-              Train your brain to recognize deception patterns
-            </p>
-          </div>
-
-          <!-- Fullscreen Game Container -->
-          <div id="fullscreen-game" class="hidden">
-            <div class="game-controls">
-              <button
-                class="exit-game-btn hover-button"
-                onclick="exitFullscreenGame()"
-              >
-                EXIT GAME
-              </button>
-            </div>
-            <div class="text-center text-white">
-              <h3 class="text-2xl mb-4">MISINFO DETECTOR GAME</h3>
-              <p class="text-sm mb-6">
-                Spot the fake news in this interactive challenge
-              </p>
-              <div class="bg-[#F0EDE3] p-8 pixel-border inline-block">
-                <p class="text-[#057087] text-lg">🔍 FIND THE FAKE NEWS 🔍</p>
-                <p class="text-[#BC2231] text-sm mt-4">
-                  Game content integration area
-                </p>
-                <div class="mt-6 p-4 bg-[#54B0BF] pixel-border">
-                  <p class="text-white text-xs">
-                    Your custom game code goes here
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Educational Content -->
+      <!-- How to spot misinformation (kept on Home) -->
       <section class="bg-[#54B0BF] p-10">
         <div class="container mx-auto">
-          <h2 class="text-xl md:text-2xl font-bold text-center mb-8 text-white">
-            HOW TO SPOT MISINFORMATION
-          </h2>
+          <h2 class="text-xl md:text-2xl font-bold text-center mb-8 text-white">HOW TO SPOT MISINFORMATION</h2>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="p-6 bg-white pixel-border">
               <h3 class="text-[#BC2231] mb-4">CHECK THE SOURCE</h3>
-              <p class="text-sm text-[#057087]">
-                Verify website credibility and author expertise
-              </p>
+              <p class="text-sm text-[#057087]">Verify website credibility and author expertise</p>
             </div>
             <div class="p-6 bg-white pixel-border">
               <h3 class="text-[#BC2231] mb-4">LOOK FOR EVIDENCE</h3>
-              <p class="text-sm text-[#057087]">
-                Real claims have supporting data and sources
-              </p>
+              <p class="text-sm text-[#057087]">Real claims have supporting data and sources</p>
             </div>
             <div class="p-6 bg-white pixel-border">
               <h3 class="text-[#BC2231] mb-4">CHECK THE DATE</h3>
-              <p class="text-sm text-[#057087]">
-                Old stories often get shared as current news
-              </p>
+              <p class="text-sm text-[#057087]">Old stories often get shared as current news</p>
             </div>
             <div class="p-6 bg-white pixel-border">
               <h3 class="text-[#BC2231] mb-4">READ BEYOND HEADLINES</h3>
-              <p class="text-sm text-[#057087]">
-                Sensational headlines often misrepresent content
-              </p>
+              <p class="text-sm text-[#057087]">Sensational headlines often misrepresent content</p>
             </div>
           </div>
         </div>
@@ -407,6 +165,13 @@
       </div>
     </main>
 
+    <style>
+      /* Keep sparkle-only (no hover background) */
+      .nav-link:hover { background: transparent }
+      .desktop-nav .nav-link:hover { background: transparent !important; border-color: transparent !important; box-shadow: none !important; transform: none !important }
+      .hero-section{ background: transparent }
+    </style>
+
     <footer id="resources" class="bg-[#057087] text-white p-6 pixel-border">
       <div class="container mx-auto">
         <h3 class="text-lg font-bold mb-4">TRUSTED RESOURCES</h3>
@@ -415,36 +180,26 @@
             <h4 class="font-bold mb-2">FACT CHECKING</h4>
             <ul class="text-sm">
               <li><a href="#" class="hover:text-[#F38833]">Snopes</a></li>
-              <li>
-                <a href="#" class="hover:text-[#F38833]">FactCheck.org</a>
-              </li>
+              <li><a href="#" class="hover:text-[#F38833]">FactCheck.org</a></li>
             </ul>
           </div>
           <div class="p-4 bg-[#54B0BF] pixel-border">
             <h4 class="font-bold mb-2">EDUCATION</h4>
             <ul class="text-sm">
-              <li>
-                <a href="#" class="hover:text-[#F38833]">Media Literacy</a>
-              </li>
-              <li>
-                <a href="#" class="hover:text-[#F38833]">Verification Tools</a>
-              </li>
+              <li><a href="#" class="hover:text-[#F38833]">Media Literacy</a></li>
+              <li><a href="#" class="hover:text-[#F38833]">Verification Tools</a></li>
             </ul>
           </div>
           <div class="p-4 bg-[#54B0BF] pixel-border">
             <h4 class="font-bold mb-2">REPORTING</h4>
             <ul class="text-sm">
-              <li>
-                <a href="#" class="hover:text-[#F38833]">Report Fake News</a>
-              </li>
+              <li><a href="#" class="hover:text-[#F38833]">Report Fake News</a></li>
               <li><a href="#" class="hover:text-[#F38833]">Get Help</a></li>
             </ul>
           </div>
         </div>
         <div class="text-center mt-6 pt-4 border-t border-[#54B0BF]">
-          <p class="text-sm">
-            © 2024 Misinformation Awareness Platform - Fighting Fake News Daily
-          </p>
+          <p class="text-sm">© 2024 MISINFO - Fighting Fake News Daily</p>
         </div>
       </div>
     </footer>
