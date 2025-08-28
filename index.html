@@ -3,17 +3,36 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Educational platform to combat misinformation with a fact-checking chatbot and interactive games." />
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <meta
+      name="description"
+      content="Educational platform to combat misinformation with a fact-checking chatbot and interactive games."
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
     <link rel="stylesheet" href="styles.css" />
     <title>MISINFO</title>
   </head>
   <body data-theme="light">
     <!-- Background Video -->
     <div class="video-background" aria-hidden="true">
-      <video class="video-background-media" src="animation.mp4" autoplay muted loop playsinline></video>
+      <video
+        class="video-background-media"
+        src="animation.mp4"
+        autoplay
+        muted
+        loop
+        playsinline
+      ></video>
       <div class="video-overlay"></div>
     </div>
 
@@ -35,26 +54,98 @@
         <!-- Desktop Navigation (sparkle effect) -->
         <nav class="desktop-nav hidden md:flex space-x-6">
           <a href="index.html" class="nav-link">
-            <svg viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M93.781 51.578C95 50.969 96 49.359 96 48c0-1.375-1-2.969-2.219-3.578 0 0-22.868-1.514-31.781-10.422-8.915-8.91-10.438-31.781-10.438-31.781C50.969 1 49.375 0 48 0s-2.969 1-3.594 2.219c0 0-1.5 22.87-10.406 31.781-8.908 8.913-31.781 10.422-31.781 10.422C1 45.031 0 46.625 0 48c0 1.359 1 2.969 2.219 3.578 0 0 22.873 1.51 31.781 10.422 8.906 8.911 10.406 31.781 10.406 31.781C45.031 95 46.625 96 48 96s2.969-1 3.562-2.219c0 0 1.523-22.871 10.438-31.781 8.913-8.908 31.781-10.422 31.781-10.422Z" fill="#000"/></svg>
-            <svg viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M93.781 51.578C95 50.969 96 49.359 96 48c0-1.375-1-2.969-2.219-3.578 0 0-22.868-1.514-31.781-10.422-8.915-8.91-10.438-31.781-10.438-31.781C50.969 1 49.375 0 48 0s-2.969 1-3.594 2.219c0 0-1.5 22.87-10.406 31.781-8.908 8.913-31.781 10.422-31.781 10.422C1 45.031 0 46.625 0 48c0 1.359 1 2.969 2.219 3.578 0 0 22.873 1.51 31.781 10.422 8.906 8.911 10.406 31.781 10.406 31.781C45.031 95 46.625 96 48 96s2.969-1 3.562-2.219c0 0 1.523-22.871 10.438-31.781 8.913-8.908 31.781-10.422 31.781-10.422Z" fill="#000"/></svg>
+            <svg
+              viewBox="0 0 96 96"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M93.781 51.578C95 50.969 96 49.359 96 48c0-1.375-1-2.969-2.219-3.578 0 0-22.868-1.514-31.781-10.422-8.915-8.91-10.438-31.781-10.438-31.781C50.969 1 49.375 0 48 0s-2.969 1-3.594 2.219c0 0-1.5 22.87-10.406 31.781-8.908 8.913-31.781 10.422-31.781 10.422C1 45.031 0 46.625 0 48c0 1.359 1 2.969 2.219 3.578 0 0 22.873 1.51 31.781 10.422 8.906 8.911 10.406 31.781 10.406 31.781C45.031 95 46.625 96 48 96s2.969-1 3.562-2.219c0 0 1.523-22.871 10.438-31.781 8.913-8.908 31.781-10.422 31.781-10.422Z"
+                fill="#000"
+              />
+            </svg>
+            <svg
+              viewBox="0 0 96 96"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M93.781 51.578C95 50.969 96 49.359 96 48c0-1.375-1-2.969-2.219-3.578 0 0-22.868-1.514-31.781-10.422-8.915-8.91-10.438-31.781-10.438-31.781C50.969 1 49.375 0 48 0s-2.969 1-3.594 2.219c0 0-1.5 22.87-10.406 31.781-8.908 8.913-31.781 10.422-31.781 10.422C1 45.031 0 46.625 0 48c0 1.359 1 2.969 2.219 3.578 0 0 22.873 1.51 31.781 10.422 8.906 8.911 10.406 31.781 10.406 31.781C45.031 95 46.625 96 48 96s2.969-1 3.562-2.219c0 0 1.523-22.871 10.438-31.781 8.913-8.908 31.781-10.422 31.781-10.422Z"
+                fill="#000"
+              />
+            </svg>
             <span>HOME</span>
             <span aria-hidden="true">HOME</span>
           </a>
           <a href="fact-check.html" class="nav-link">
-            <svg viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M93.781 51.578C95 50.969 96 49.359 96 48c0-1.375-1-2.969-2.219-3.578 0 0-22.868-1.514-31.781-10.422-8.915-8.91-10.438-31.781-10.438-31.781C50.969 1 49.375 0 48 0s-2.969 1-3.594 2.219c0 0-1.5 22.87-10.406 31.781-8.908 8.913-31.781 10.422-31.781 10.422C1 45.031 0 46.625 0 48c0 1.359 1 2.969 2.219 3.578 0 0 22.873 1.51 31.781 10.422 8.906 8.911 10.406 31.781 10.406 31.781C45.031 95 46.625 96 48 96s2.969-1 3.562-2.219c0 0 1.523-22.871 10.438-31.781 8.913-8.908 31.781-10.422 31.781-10.422Z" fill="#000"/></svg>
-            <svg viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M93.781 51.578C95 50.969 96 49.359 96 48c0-1.375-1-2.969-2.219-3.578 0 0-22.868-1.514-31.781-10.422-8.915-8.91-10.438-31.781-10.438-31.781C50.969 1 49.375 0 48 0s-2.969 1-3.594 2.219c0 0-1.5 22.87-10.406 31.781-8.908 8.913-31.781 10.422-31.781 10.422C1 45.031 0 46.625 0 48c0 1.359 1 2.969 2.219 3.578 0 0 22.873 1.51 31.781 10.422 8.906 8.911 10.406 31.781 10.406 31.781C45.031 95 46.625 96 48 96s2.969-1 3.562-2.219c0 0 1.523-22.871 10.438-31.781 8.913-8.908 31.781-10.422 31.781-10.422Z" fill="#000"/></svg>
+            <svg
+              viewBox="0 0 96 96"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M93.781 51.578C95 50.969 96 49.359 96 48c0-1.375-1-2.969-2.219-3.578 0 0-22.868-1.514-31.781-10.422-8.915-8.91-10.438-31.781-10.438-31.781C50.969 1 49.375 0 48 0s-2.969 1-3.594 2.219c0 0-1.5 22.87-10.406 31.781-8.908 8.913-31.781 10.422-31.781 10.422C1 45.031 0 46.625 0 48c0 1.359 1 2.969 2.219 3.578 0 0 22.873 1.51 31.781 10.422 8.906 8.911 10.406 31.781 10.406 31.781C45.031 95 46.625 96 48 96s2.969-1 3.562-2.219c0 0 1.523-22.871 10.438-31.781 8.913-8.908 31.781-10.422 31.781-10.422Z"
+                fill="#000"
+              />
+            </svg>
+            <svg
+              viewBox="0 0 96 96"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M93.781 51.578C95 50.969 96 49.359 96 48c0-1.375-1-2.969-2.219-3.578 0 0-22.868-1.514-31.781-10.422-8.915-8.91-10.438-31.781-10.438-31.781C50.969 1 49.375 0 48 0s-2.969 1-3.594 2.219c0 0-1.5 22.87-10.406 31.781-8.908 8.913-31.781 10.422-31.781 10.422C1 45.031 0 46.625 0 48c0 1.359 1 2.969 2.219 3.578 0 0 22.873 1.51 31.781 10.422 8.906 8.911 10.406 31.781 10.406 31.781C45.031 95 46.625 96 48 96s2.969-1 3.562-2.219c0 0 1.523-22.871 10.438-31.781 8.913-8.908 31.781-10.422 31.781-10.422Z"
+                fill="#000"
+              />
+            </svg>
             <span>FACT CHECK</span>
             <span aria-hidden="true">FACT CHECK</span>
           </a>
           <a href="game.html" class="nav-link">
-            <svg viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M93.781 51.578C95 50.969 96 49.359 96 48c0-1.375-1-2.969-2.219-3.578 0 0-22.868-1.514-31.781-10.422-8.915-8.91-10.438-31.781-10.438-31.781C50.969 1 49.375 0 48 0s-2.969 1-3.594 2.219c0 0-1.5 22.87-10.406 31.781-8.908 8.913-31.781 10.422-31.781 10.422C1 45.031 0 46.625 0 48c0 1.359 1 2.969 2.219 3.578 0 0 22.873 1.51 31.781 10.422 8.906 8.911 10.406 31.781 10.406 31.781C45.031 95 46.625 96 48 96s2.969-1 3.562-2.219c0 0 1.523-22.871 10.438-31.781 8.913-8.908 31.781-10.422 31.781-10.422Z" fill="#000"/></svg>
-            <svg viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M93.781 51.578C95 50.969 96 49.359 96 48c0-1.375-1-2.969-2.219-3.578 0 0-22.868-1.514-31.781-10.422-8.915-8.91-10.438-31.781-10.438-31.781C50.969 1 49.375 0 48 0s-2.969 1-3.594 2.219c0 0-1.5 22.87-10.406 31.781-8.908 8.913-31.781 10.422-31.781 10.422C1 45.031 0 46.625 0 48c0 1.359 1 2.969 2.219 3.578 0 0 22.873 1.51 31.781 10.422 8.906 8.911 10.406 31.781 10.406 31.781C45.031 95 46.625 96 48 96s2.969-1 3.562-2.219c0 0 1.523-22.871 10.438-31.781 8.913-8.908 31.781-10.422 31.781-10.422Z" fill="#000"/></svg>
+            <svg
+              viewBox="0 0 96 96"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M93.781 51.578C95 50.969 96 49.359 96 48c0-1.375-1-2.969-2.219-3.578 0 0-22.868-1.514-31.781-10.422-8.915-8.91-10.438-31.781-10.438-31.781C50.969 1 49.375 0 48 0s-2.969 1-3.594 2.219c0 0-1.5 22.87-10.406 31.781-8.908 8.913-31.781 10.422-31.781 10.422C1 45.031 0 46.625 0 48c0 1.359 1 2.969 2.219 3.578 0 0 22.873 1.51 31.781 10.422 8.906 8.911 10.406 31.781 10.406 31.781C45.031 95 46.625 96 48 96s2.969-1 3.562-2.219c0 0 1.523-22.871 10.438-31.781 8.913-8.908 31.781-10.422 31.781-10.422Z"
+                fill="#000"
+              />
+            </svg>
+            <svg
+              viewBox="0 0 96 96"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M93.781 51.578C95 50.969 96 49.359 96 48c0-1.375-1-2.969-2.219-3.578 0 0-22.868-1.514-31.781-10.422-8.915-8.91-10.438-31.781-10.438-31.781C50.969 1 49.375 0 48 0s-2.969 1-3.594 2.219c0 0-1.5 22.87-10.406 31.781-8.908 8.913-31.781 10.422-31.781 10.422C1 45.031 0 46.625 0 48c0 1.359 1 2.969 2.219 3.578 0 0 22.873 1.51 31.781 10.422 8.906 8.911 10.406 31.781 10.406 31.781C45.031 95 46.625 96 48 96s2.969-1 3.562-2.219c0 0 1.523-22.871 10.438-31.781 8.913-8.908 31.781-10.422 31.781-10.422Z"
+                fill="#000"
+              />
+            </svg>
             <span>GAME</span>
             <span aria-hidden="true">GAME</span>
           </a>
           <a href="resources.html" class="nav-link">
-            <svg viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M93.781 51.578C95 50.969 96 49.359 96 48c0-1.375-1-2.969-2.219-3.578 0 0-22.868-1.514-31.781-10.422-8.915-8.91-10.438-31.781-10.438-31.781C50.969 1 49.375 0 48 0s-2.969 1-3.594 2.219c0 0-1.5 22.87-10.406 31.781-8.908 8.913-31.781 10.422-31.781 10.422C1 45.031 0 46.625 0 48c0 1.359 1 2.969 2.219 3.578 0 0 22.873 1.51 31.781 10.422 8.906 8.911 10.406 31.781 10.406 31.781C45.031 95 46.625 96 48 96s2.969-1 3.562-2.219c0 0 1.523-22.871 10.438-31.781 8.913-8.908 31.781-10.422 31.781-10.422Z" fill="#000"/></svg>
-            <svg viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M93.781 51.578C95 50.969 96 49.359 96 48c0-1.375-1-2.969-2.219-3.578 0 0-22.868-1.514-31.781-10.422-8.915-8.91-10.438-31.781-10.438-31.781C50.969 1 49.375 0 48 0s-2.969 1-3.594 2.219c0 0-1.5 22.87-10.406 31.781-8.908 8.913-31.781 10.422-31.781 10.422C1 45.031 0 46.625 0 48c0 1.359 1 2.969 2.219 3.578 0 0 22.873 1.51 31.781 10.422 8.906 8.911 10.406 31.781 10.406 31.781C45.031 95 46.625 96 48 96s2.969-1 3.562-2.219c0 0 1.523-22.871 10.438-31.781 8.913-8.908 31.781-10.422 31.781-10.422Z" fill="#000"/></svg>
+            <svg
+              viewBox="0 0 96 96"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M93.781 51.578C95 50.969 96 49.359 96 48c0-1.375-1-2.969-2.219-3.578 0 0-22.868-1.514-31.781-10.422-8.915-8.91-10.438-31.781-10.438-31.781C50.969 1 49.375 0 48 0s-2.969 1-3.594 2.219c0 0-1.5 22.87-10.406 31.781-8.908 8.913-31.781 10.422-31.781 10.422C1 45.031 0 46.625 0 48c0 1.359 1 2.969 2.219 3.578 0 0 22.873 1.51 31.781 10.422 8.906 8.911 10.406 31.781 10.406 31.781C45.031 95 46.625 96 48 96s2.969-1 3.562-2.219c0 0 1.523-22.871 10.438-31.781 8.913-8.908 31.781-10.422 31.781-10.422Z"
+                fill="#000"
+              />
+            </svg>
+            <svg
+              viewBox="0 0 96 96"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M93.781 51.578C95 50.969 96 49.359 96 48c0-1.375-1-2.969-2.219-3.578 0 0-22.868-1.514-31.781-10.422-8.915-8.91-10.438-31.781-10.438-31.781C50.969 1 49.375 0 48 0s-2.969 1-3.594 2.219c0 0-1.5 22.87-10.406 31.781-8.908 8.913-31.781 10.422-31.781 10.422C1 45.031 0 46.625 0 48c0 1.359 1 2.969 2.219 3.578 0 0 22.873 1.51 31.781 10.422 8.906 8.911 10.406 31.781 10.406 31.781C45.031 95 46.625 96 48 96s2.969-1 3.562-2.219c0 0 1.523-22.871 10.438-31.781 8.913-8.908 31.781-10.422 31.781-10.422Z"
+                fill="#000"
+              />
+            </svg>
             <span>RESOURCES</span>
             <span aria-hidden="true">RESOURCES</span>
           </a>
@@ -79,10 +170,26 @@
 
       <!-- Mobile Navigation -->
       <nav class="mobile-nav nav-hidden pixel-border">
-        <a href="index.html" class="text-white hover:text-[#F38833] transition-colors">HOME</a>
-        <a href="fact-check.html" class="text-white hover:text-[#F38833] transition-colors">FACT CHECK</a>
-        <a href="game.html" class="text-white hover:text-[#F38833] transition-colors">GAME</a>
-        <a href="resources.html" class="text-white hover:text-[#F38833] transition-colors">RESOURCES</a>
+        <a
+          href="index.html"
+          class="text-white hover:text-[#F38833] transition-colors"
+          >HOME</a
+        >
+        <a
+          href="fact-check.html"
+          class="text-white hover:text-[#F38833] transition-colors"
+          >FACT CHECK</a
+        >
+        <a
+          href="game.html"
+          class="text-white hover:text-[#F38833] transition-colors"
+          >GAME</a
+        >
+        <a
+          href="resources.html"
+          class="text-white hover:text-[#F38833] transition-colors"
+          >RESOURCES</a
+        >
         <div class="button mobile-login-btn">
           <input type="checkbox" id="mobile-login-button" />
           <label for="mobile-login-button">
@@ -99,12 +206,22 @@
       <!-- Hero (Home) -->
       <section class="hero-section">
         <div class="container mx-auto">
-          <h1 class="text-2xl md:text-4xl font-bold mb-6">FIGHT MISINFORMATION</h1>
-          <p class="text-sm md:text-base mb-6">Join the battle against fake news and digital deception</p>
+          <h1 class="text-2xl md:text-4xl font-bold mb-6">
+            FIGHT MISINFORMATION
+          </h1>
+          <p class="text-sm md:text-base mb-6">
+            Join the battle against fake news and digital deception
+          </p>
           <div class="warning-banner pixel-border mb-8">
-            <p class="text-sm">⚠️ 70% of internet users encounter misinformation weekly</p>
+            <p class="text-sm">
+              ⚠️ 70% of internet users encounter misinformation weekly
+            </p>
           </div>
-          <a href="fact-check.html" class="px-6 py-3 bg-[#BC2231] text-white hover-button text-sm md:text-base inline-block">LEARN TO SPOT FAKE NEWS</a>
+          <a
+            href="fact-check.html"
+            class="px-6 py-3 bg-[#BC2231] text-white hover-button text-sm md:text-base inline-block"
+            >LEARN TO SPOT FAKE NEWS</a
+          >
         </div>
       </section>
 
@@ -115,7 +232,9 @@
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div class="p-4 bg-white pixel-border">
               <div class="stat-number">64%</div>
-              <div class="stat-label">of fake news spreads faster than truth</div>
+              <div class="stat-label">
+                of fake news spreads faster than truth
+              </div>
             </div>
             <div class="p-4 bg-white pixel-border">
               <div class="stat-number">85%</div>
@@ -132,44 +251,63 @@
       <!-- How to spot misinformation (kept on Home) -->
       <section class="bg-[#54B0BF] p-10">
         <div class="container mx-auto">
-          <h2 class="text-xl md:text-2xl font-bold text-center mb-8 text-white">HOW TO SPOT MISINFORMATION</h2>
+          <h2 class="text-xl md:text-2xl font-bold text-center mb-8 text-white">
+            HOW TO SPOT MISINFORMATION
+          </h2>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="p-6 bg-white pixel-border">
               <h3 class="text-[#BC2231] mb-4">CHECK THE SOURCE</h3>
-              <p class="text-sm text-[#057087]">Verify website credibility and author expertise</p>
+              <p class="text-sm text-[#057087]">
+                Verify website credibility and author expertise
+              </p>
             </div>
             <div class="p-6 bg-white pixel-border">
               <h3 class="text-[#BC2231] mb-4">LOOK FOR EVIDENCE</h3>
-              <p class="text-sm text-[#057087]">Real claims have supporting data and sources</p>
+              <p class="text-sm text-[#057087]">
+                Real claims have supporting data and sources
+              </p>
             </div>
             <div class="p-6 bg-white pixel-border">
               <h3 class="text-[#BC2231] mb-4">CHECK THE DATE</h3>
-              <p class="text-sm text-[#057087]">Old stories often get shared as current news</p>
+              <p class="text-sm text-[#057087]">
+                Old stories often get shared as current news
+              </p>
             </div>
             <div class="p-6 bg-white pixel-border">
               <h3 class="text-[#BC2231] mb-4">READ BEYOND HEADLINES</h3>
-              <p class="text-sm text-[#057087]">Sensational headlines often misrepresent content</p>
+              <p class="text-sm text-[#057087]">
+                Sensational headlines often misrepresent content
+              </p>
             </div>
           </div>
         </div>
       </section>
 
       <!-- Chatbot Floating Button -->
-      <div id="chatbot-button"><i class="fa-solid fa-robot"></i> Glitchy</div>
+      <!-- <div id="chatbot-button"><i class="fa-solid fa-robot"></i> Glitchy</div> -->
 
       <!-- Chat Window -->
-      <div id="chat-window" class="hidden">
+      <!-- <div id="chat-window" class="hidden">
         <div class="chat-header"><i class="fa-solid fa-robot"></i> Glitchy</div>
         <div class="chat-body" id="chat-body"></div>
         <input type="text" id="chat-input" placeholder="Ask me anything..." />
-      </div>
+      </div> -->
     </main>
 
     <style>
       /* Keep sparkle-only (no hover background) */
-      .nav-link:hover { background: transparent }
-      .desktop-nav .nav-link:hover { background: transparent !important; border-color: transparent !important; box-shadow: none !important; transform: none !important }
-      .hero-section{ background: transparent }
+      .nav-link:hover {
+        background: transparent;
+      }
+      .desktop-nav .nav-link:hover {
+        background: transparent !important;
+        border-color: transparent !important;
+        box-shadow: none !important;
+        transform: none !important;
+      }
+      .hero-section {
+        background: transparent;
+      }
     </style>
 
     <footer id="resources" class="bg-[#057087] text-white p-6 pixel-border">
@@ -180,20 +318,28 @@
             <h4 class="font-bold mb-2">FACT CHECKING</h4>
             <ul class="text-sm">
               <li><a href="#" class="hover:text-[#F38833]">Snopes</a></li>
-              <li><a href="#" class="hover:text-[#F38833]">FactCheck.org</a></li>
+              <li>
+                <a href="#" class="hover:text-[#F38833]">FactCheck.org</a>
+              </li>
             </ul>
           </div>
           <div class="p-4 bg-[#54B0BF] pixel-border">
             <h4 class="font-bold mb-2">EDUCATION</h4>
             <ul class="text-sm">
-              <li><a href="#" class="hover:text-[#F38833]">Media Literacy</a></li>
-              <li><a href="#" class="hover:text-[#F38833]">Verification Tools</a></li>
+              <li>
+                <a href="#" class="hover:text-[#F38833]">Media Literacy</a>
+              </li>
+              <li>
+                <a href="#" class="hover:text-[#F38833]">Verification Tools</a>
+              </li>
             </ul>
           </div>
           <div class="p-4 bg-[#54B0BF] pixel-border">
             <h4 class="font-bold mb-2">REPORTING</h4>
             <ul class="text-sm">
-              <li><a href="#" class="hover:text-[#F38833]">Report Fake News</a></li>
+              <li>
+                <a href="#" class="hover:text-[#F38833]">Report Fake News</a>
+              </li>
               <li><a href="#" class="hover:text-[#F38833]">Get Help</a></li>
             </ul>
           </div>
