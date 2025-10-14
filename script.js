@@ -289,7 +289,7 @@ async function verifyClaim() {
     }
 
     // Send to your backend
-    const response = await fetch("http://localhost:5000/chatbot", {
+    const response = await fetch("http://localhost:3000/api/chatbot", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ message }),
@@ -434,24 +434,26 @@ document.addEventListener("DOMContentLoaded", function () {
   // Inject page-specific CSS file based on current page
   try {
     const head = document.head;
-    const file = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+    const file = (
+      location.pathname.split("/").pop() || "index.html"
+    ).toLowerCase();
     const map = {
-      '': 'home.css',
-      'index.html': 'home.css',
-      'research.html': 'research.css',
-      'fact-check.html': 'fact-check.css',
-      'game.html': 'game.css',
-      'resources.html': 'resources.css'
+      "": "home.css",
+      "index.html": "home.css",
+      "research.html": "research.css",
+      "fact-check.html": "fact-check.css",
+      "game.html": "game.css",
+      "resources.html": "resources.css",
     };
     const cssFile = map[file] || null;
     if (cssFile) {
-      const link = document.createElement('link');
-      link.rel = 'stylesheet';
+      const link = document.createElement("link");
+      link.rel = "stylesheet";
       link.href = cssFile;
       head.appendChild(link);
     }
   } catch (e) {
-    console.warn('Page CSS injection failed:', e);
+    console.warn("Page CSS injection failed:", e);
   }
 
   initializeImageUpload();
@@ -612,7 +614,7 @@ input.addEventListener("keypress", async function (e) {
 
     // Send message to backend
     try {
-      const response = await fetch("http://localhost:5000/chatbot", {
+      const response = await fetch("http://localhost:3000/api/chatbot", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: msg }),
