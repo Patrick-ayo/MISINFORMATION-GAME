@@ -1,8 +1,0 @@
-[
-null,
-{"id":1,"expanded":true,"name":"MAP001","order":1,"parentId":0,"scrollX":1330.1818181818182,"scrollY":359.27272727272725},
-{"id":2,"expanded":true,"name":"MAP002","order":2,"parentId":1,"scrollX":1072,"scrollY":621.3333333333334},
-{"id":3,"expanded":false,"name":"Player House","order":3,"parentId":2,"scrollX":610.1818181818181,"scrollY":548.3636363636364},
-{"id":4,"expanded":false,"name":"patricks clinic","order":4,"parentId":2,"scrollX":595.6363636363636,"scrollY":332.3636363636364},
-{"id":5,"expanded":false,"name":"Yash,s clinic","order":5,"parentId":2,"scrollX":595.6363636363636,"scrollY":332.3636363636364}
-]
