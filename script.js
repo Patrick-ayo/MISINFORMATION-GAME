@@ -461,6 +461,135 @@ document.addEventListener("DOMContentLoaded", function () {
 loadTheme();
 handleResize();
 
+// --- Hexagon background overlay logic ---
+(function initHexagonBackground() {
+  const canvas = document.getElementById('hexagon-canvas');
+  const container = document.getElementById('hexagon-bg');
+  if (!canvas || !container) return;
+
+  const ctx = canvas.getContext('2d');
+  let DPR = window.devicePixelRatio || 1;
+
+  function resize() {
+    DPR = window.devicePixelRatio || 1;
+    const rect = container.getBoundingClientRect();
+    canvas.width = Math.round(rect.width * DPR);
+    canvas.height = Math.round((window.innerHeight - rect.top) * DPR);
+    canvas.style.width = rect.width + 'px';
+    canvas.style.height = (window.innerHeight - rect.top) + 'px';
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    draw();
+  }
+
+  // hexagon grid parameters (similar to animate-ui defaults)
+  const hexSize = 50; // base size (px)
+  const hexMargin = 6; // spacing
+  const strokeColor = 'rgba(255,255,255,0.08)';
+  const hoverColor = 'rgba(243,136,51,0.95)';
+
+  let pointer = { x: -9999, y: -9999 };
+
+  function hexToPixel(col, row, size) {
+    const w = Math.sqrt(3) * size;
+    const h = 2 * size;
+    const x = col * (w + hexMargin) + (row % 2) * (w / 2);
+    const y = row * (3 / 4 * h + hexMargin);
+    return { x, y };
+  }
+
+  function draw() {
+    const w = canvas.width / DPR;
+    const h = canvas.height / DPR;
+    ctx.clearRect(0, 0, w, h);
+
+    const size = hexSize;
+    const hexW = Math.sqrt(3) * size;
+    const hexH = 2 * size;
+
+    const cols = Math.ceil(w / (hexW + hexMargin)) + 2;
+    const rows = Math.ceil(h / (0.75 * hexH + hexMargin)) + 2;
+
+    for (let r = -1; r < rows; r++) {
+      for (let c = -1; c < cols; c++) {
+        const p = hexToPixel(c, r, size);
+        const centerX = p.x;
+        const centerY = p.y;
+        // distance to pointer
+        const dx = centerX - pointer.x;
+        const dy = centerY - pointer.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        // line alpha falls off with distance
+        const alpha = Math.max(0, 0.6 - dist / 200);
+        const lineAlpha = Math.min(0.12, alpha * 0.2) + 0.02;
+
+        // draw hex
+        drawHexagon(ctx, centerX, centerY, size - 6, `rgba(255,255,255,${lineAlpha})`);
+
+        // if close to pointer, draw glow
+        if (dist < 120) {
+          const t = 1 - dist / 120;
+          ctx.beginPath();
+          drawHexagon(ctx, centerX, centerY, size * (0.4 + 0.6 * t), hoverColor.replace('0.95', String(0.4 * t)));
+        }
+      }
+    }
+  }
+
+  function drawHexagon(ctx, cx, cy, size, strokeStyle) {
+    const s = size;
+    const a = Math.PI / 3; // 60deg
+    ctx.beginPath();
+    for (let i = 0; i < 6; i++) {
+      const x = cx + s * Math.cos(a * i + Math.PI / 6);
+      const y = cy + s * Math.sin(a * i + Math.PI / 6);
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.closePath();
+    ctx.strokeStyle = strokeStyle || strokeColor;
+    ctx.lineWidth = 1;
+    ctx.stroke();
+  }
+
+  // pointer events: only enable when user moves over top area below navbar
+  function onPointerMove(e) {
+    const rect = canvas.getBoundingClientRect();
+    const x = (e.clientX - rect.left);
+    const y = (e.clientY - rect.top);
+    pointer.x = x;
+    pointer.y = y;
+    container.classList.add('hexagon-visible');
+    container.classList.remove('hexagon-hidden');
+    container.classList.add('hover-active');
+    draw();
+  }
+
+  function onPointerLeave() {
+    pointer.x = -9999; pointer.y = -9999;
+    container.classList.remove('hover-active');
+    container.classList.remove('hexagon-visible');
+    container.classList.add('hexagon-hidden');
+    draw();
+  }
+
+  // activate when mouse enters main content area (below header)
+  window.addEventListener('mousemove', function (e) {
+    const header = document.querySelector('header');
+    const headerBottom = header ? header.getBoundingClientRect().bottom : 64;
+    if (e.clientY > headerBottom) {
+      onPointerMove(e);
+    } else {
+      // if pointer is over header, hide overlay
+      onPointerLeave();
+    }
+  });
+
+  window.addEventListener('mouseleave', onPointerLeave);
+  window.addEventListener('resize', resize);
+  // initial
+  resize();
+})();
+
 const button = document.getElementById("chatbot-button");
 const windowEl = document.getElementById("chat-window");
 const input = document.getElementById("chat-input");
