@@ -635,13 +635,49 @@ handleResize();
   }
 
   // activate when mouse enters main content area (below header)
+  function parseAlpha(colorStr) {
+    if (!colorStr) return 1;
+    const rgba = colorStr.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/i);
+    if (rgba) return rgba[4] !== undefined ? parseFloat(rgba[4]) : 1;
+    // unknown formats assume opaque
+    return 1;
+  }
+
+  function isPointOverTransparent(clientX, clientY) {
+    let el = document.elementFromPoint(clientX, clientY);
+    if (!el) return true;
+    // If pointer is over the hexagon canvas itself or its container, allow effect
+    if (el.id === 'hexagon-canvas' || el.closest('#hexagon-bg')) return true;
+    // If pointer is over an iframe (game) treat as opaque
+    if (el.tagName === 'IFRAME' || el.closest('iframe')) return false;
+
+    // Walk up parents; if any visible ancestor has a background-image or opaque background color or reduced opacity -> opaque
+    while (el && el !== document.documentElement) {
+      const cs = window.getComputedStyle(el);
+      if (!cs) break;
+      if (cs.display === 'none' || cs.visibility === 'hidden') {
+        el = el.parentElement;
+        continue;
+      }
+      const bgImage = cs.backgroundImage;
+      if (bgImage && bgImage !== 'none') return false;
+      const bgColor = cs.backgroundColor;
+      const alpha = parseAlpha(bgColor);
+      if (alpha > 0) return false; // non-transparent background
+      const opacity = parseFloat(cs.opacity || '1');
+      if (!isNaN(opacity) && opacity < 1) return false; // semi-transparent element (consider as non-transparent area)
+      el = el.parentElement;
+    }
+    return true;
+  }
+
   window.addEventListener('mousemove', function (e) {
     const header = document.querySelector('header');
     const headerBottom = header ? header.getBoundingClientRect().bottom : 64;
-    if (e.clientY > headerBottom) {
+    if (e.clientY > headerBottom && isPointOverTransparent(e.clientX, e.clientY)) {
       onPointerMove(e);
     } else {
-      // if pointer is over header, hide overlay
+      // if pointer is over header or over an opaque element, hide overlay
       onPointerLeave();
     }
   });
