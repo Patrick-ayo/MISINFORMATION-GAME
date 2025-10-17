@@ -324,42 +324,40 @@
           <p class="text-center text-sm text-[#BC2231] mb-6">
             Test your skills at spotting fake news in this interactive challenge
           </p>
-          <div class="game-placeholder" onclick="enterFullscreenGame()">
+          <div class="game-placeholder" id="game-placeholder">
             <p class="text-lg md:text-xl mb-4">
-              🎮 CLICK TO PLAY MISINFO DETECTOR 🎮
+              🎮 PLAY MISINFO DETECTOR 🎮
             </p>
-            <p class="text-sm md:text-base">Fullscreen immersive experience</p>
+            <p class="text-sm md:text-base">Playable embedded demo — click ENLARGE to fullscreen</p>
             <p class="text-xs mt-4 text-[#057087]">
               Train your brain to recognize deception patterns
             </p>
+
+            <!-- Embedded in-page iframe so progress persists while switching fullscreen -->
+            <div id="inpage-iframe-wrapper" style="width:100%;height:420px;margin-top:1rem;">
+              <iframe id="rpg-iframe" src="game2mz/index.html" frameborder="0" style="width:100%;height:100%;border:3px dashed #F38833;" allow="fullscreen;" sandbox="allow-scripts allow-same-origin allow-popups"></iframe>
+            </div>
+
+            <div style="margin-top:0.75rem;display:flex;gap:0.5rem;justify-content:center;">
+              <button class="hover-button" onclick="enterFullscreenGame()">ENLARGE</button>
+            </div>
           </div>
 
           <!-- Fullscreen Game Container -->
           <div id="fullscreen-game" class="hidden">
             <div class="game-controls">
               <button
+                id="exit-game-btn"
                 class="exit-game-btn hover-button"
                 onclick="exitFullscreenGame()"
               >
                 EXIT GAME
               </button>
             </div>
-            <div class="text-center text-white">
-              <h3 class="text-2xl mb-4">MISINFO DETECTOR GAME</h3>
-              <p class="text-sm mb-6">
-                Spot the fake news in this interactive challenge
-              </p>
-              <div class="bg-[#F0EDE3] p-8 pixel-border inline-block">
-                <p class="text-[#057087] text-lg">🔍 FIND THE FAKE NEWS 🔍</p>
-                <p class="text-[#BC2231] text-sm mt-4">
-                  Game content integration area
-                </p>
-                <div class="mt-6 p-4 bg-[#54B0BF] pixel-border">
-                  <p class="text-white text-xs">
-                    Your custom game code goes here
-                  </p>
-                </div>
-              </div>
+
+            <!-- fullscreen overlay will use the in-page iframe wrapper; no duplicate iframe here -->
+            <div id="game-iframe-wrapper" style="width:100%;height:80vh;display:flex;align-items:center;justify-content:center;">
+              <!-- left intentionally blank; the in-page iframe is used for fullscreen requests -->
             </div>
           </div>
         </div>

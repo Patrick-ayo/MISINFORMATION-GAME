@@ -69,22 +69,82 @@ function enterFullscreenGame() {
   document.addEventListener("keydown", handleEscapeKey);
 }
 
+// Enhanced fullscreen to load the exported RPG Maker MZ game in an iframe
+function enterFullscreenGame() {
+  const gameSection = document.querySelector("#game .game-placeholder");
+  const fullscreenGame = document.getElementById("fullscreen-game");
+  const header = document.querySelector("header");
+  const footer = document.querySelector("footer");
+  const mainContent = document.querySelector("main");
+  const iframe = document.getElementById("rpg-iframe");
+  const iframeWrapper = document.getElementById("inpage-iframe-wrapper") || document.getElementById("game-iframe-wrapper");
+
+  // Hide header/footer but keep the main content area visible (so page doesn't blank out completely)
+  if (header) header.style.display = "none";
+  if (footer) footer.style.display = "none";
+
+  // Show fullscreen overlay container (used to style/cover page if needed)
+  const fullscreenGameContainer = document.getElementById("fullscreen-game");
+  if (fullscreenGameContainer) {
+    fullscreenGameContainer.classList.remove("hidden");
+    fullscreenGameContainer.classList.add("fullscreen-game");
+  }
+
+  // Request browser fullscreen on the in-page iframe wrapper so the iframe stays loaded
+  try {
+    if (iframeWrapper.requestFullscreen) {
+      iframeWrapper.requestFullscreen();
+    } else if (iframeWrapper.webkitRequestFullscreen) {
+      iframeWrapper.webkitRequestFullscreen();
+    } else if (iframeWrapper.msRequestFullscreen) {
+      iframeWrapper.msRequestFullscreen();
+    }
+  } catch (e) {
+    console.warn("Fullscreen request failed:", e);
+  }
+
+  // Prevent scrolling behind the fullscreen element
+  document.body.style.overflow = "hidden";
+
+  // Add escape key listener
+  document.addEventListener("keydown", handleEscapeKey);
+}
+
 function exitFullscreenGame() {
   const gameSection = document.querySelector("#game .game-placeholder");
   const fullscreenGame = document.getElementById("fullscreen-game");
   const header = document.querySelector("header");
   const footer = document.querySelector("footer");
   const mainContent = document.querySelector("main");
+  const iframe = document.getElementById("rpg-iframe");
+  const iframeWrapper = document.getElementById("game-iframe-wrapper");
 
-  // Show all sections
+  // Exit browser fullscreen if active
+  try {
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+    } else if (document.webkitFullscreenElement) {
+      document.webkitExitFullscreen();
+    }
+  } catch (e) {
+    console.warn("Exit fullscreen failed:", e);
+  }
+
+  // Show header/footer again
   if (header) header.style.display = "block";
   if (footer) footer.style.display = "block";
-  if (mainContent) mainContent.style.display = "block";
-  if (gameSection) gameSection.style.display = "flex";
 
-  // Hide fullscreen game
-  fullscreenGame.classList.add("hidden");
-  fullscreenGame.classList.remove("fullscreen-game");
+  // Hide fullscreen overlay container but keep iframe loaded and visible in-page
+  const fullscreenGameContainer = document.getElementById("fullscreen-game");
+  if (fullscreenGameContainer) {
+    fullscreenGameContainer.classList.add("hidden");
+    fullscreenGameContainer.classList.remove("fullscreen-game");
+  }
+
+  // Ensure the in-page iframe remains visible (progress preserved)
+  if (iframe) {
+    iframe.style.display = "block";
+  }
 
   // Enable scrolling
   document.body.style.overflow = "auto";
