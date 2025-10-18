@@ -20,7 +20,208 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
     <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="fact-check.css" />
     <title>Fact Check - MISINFO</title>
+
+    <style>
+      /* --- Result Badge Styles --- */
+      .result-badge {
+        display: inline-block;
+        padding: 6px 14px;
+        font-family: "Press Start 2P", sans-serif;
+        font-size: 14px; /* Slightly larger */
+        text-transform: uppercase;
+        border: 3px solid #000; /* Thicker border */
+        box-shadow: 4px 4px 0px #000;
+        margin-bottom: 20px; /* More spacing */
+        line-height: 1.4;
+      }
+      .result-badge-supported {
+        background-color: #54b0bf; /* Your brand-secondary */
+        color: white;
+        border-color: #057087; /* Your brand-primary */
+        box-shadow: 4px 4px 0px #057087;
+      }
+      .result-badge-refuted {
+        background-color: #bc2231; /* Your accent-danger */
+        color: white;
+        border-color: #8c1a25; /* Darker red */
+        box-shadow: 4px 4px 0px #8c1a25;
+      }
+      /* Class name adjusted for consistency */
+      .result-badge-insufficient-information {
+        background-color: #f38833; /* Your accent-warning */
+        color: white;
+        border-color: #c06c29; /* Darker orange */
+        box-shadow: 4px 4px 0px #c06c29;
+      }
+      .result-badge-unknown {
+        /* Fallback */
+        background-color: #6b7280; /* Gray */
+        color: white;
+        border-color: #4b5563;
+        box-shadow: 4px 4px 0px #4b5563;
+      }
+
+      /* --- Result Summary & Sources --- */
+      .result-summary {
+        font-family: sans-serif; /* Use readable font */
+        font-size: 1rem; /* Standard paragraph size */
+        line-height: 1.7; /* More readable line spacing */
+        color: var(--text-secondary, #444444); /* Use theme variable */
+        margin-bottom: 24px;
+        white-space: pre-wrap; /* Respect line breaks from AI */
+        background-color: rgba(
+          255,
+          255,
+          255,
+          0.7
+        ); /* Slightly transparent white bg */
+        padding: 15px;
+        border-left: 5px solid var(--brand-secondary, #54b0bf);
+        border-radius: 4px; /* Subtle rounding */
+      }
+
+      .result-sources-list {
+        list-style-type: none;
+        padding-left: 0;
+        margin-top: 10px;
+      }
+      .result-source-item {
+        font-family: sans-serif; /* Readable font */
+        display: flex;
+        align-items: flex-start; /* Align icon top */
+        margin-bottom: 12px;
+        padding: 10px;
+        background-color: var(--bg-secondary, #ffffff); /* Use theme */
+        border: 2px solid var(--brand-secondary, #54b0bf);
+        border-radius: 4px;
+        transition: all 0.2s ease;
+        box-shadow: 2px 2px 0px var(--brand-secondary, #54b0bf);
+      }
+      .result-source-item:hover {
+        background-color: #e0f7fa; /* Light cyan on hover */
+        transform: translate(1px, 1px);
+        box-shadow: 1px 1px 0px var(--brand-primary, #057087);
+      }
+      .result-source-item a {
+        color: var(--brand-primary, #057087);
+        text-decoration: none;
+        word-break: break-all; /* Prevent overflow */
+        font-size: 0.875rem; /* 14px */
+        line-height: 1.5;
+      }
+      .result-source-item a:hover {
+        text-decoration: underline;
+        color: var(--accent-warning, #f38833);
+      }
+      .result-source-item .source-icon {
+        color: var(--accent-warning, #f38833);
+        margin-right: 10px;
+        font-size: 1rem; /* 16px */
+        margin-top: 2px; /* Align with text */
+      }
+      .result-section-title {
+        font-family: "Press Start 2P", sans-serif;
+        color: var(--brand-primary, #057087);
+        margin-bottom: 10px;
+        margin-top: 20px; /* Space above titles */
+        font-size: 0.9rem; /* Slightly smaller title */
+      }
+
+      /* --- Loading Spinner --- */
+      .loading-spinner {
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        border: 4px solid rgba(188, 34, 49, 0.3); /* Lighter danger color */
+        border-top-color: var(--brand-primary, #057087); /* Brand color */
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* --- Research Prompt & Button --- */
+      .research-button {
+        display: inline-block;
+        background-color: var(--accent-warning, #f38833);
+        color: white;
+        padding: 12px 18px; /* Slightly larger padding */
+        font-family: "Press Start 2P", sans-serif;
+        font-size: 11px; /* Smaller font for buttons */
+        text-transform: uppercase;
+        border: 3px solid #c06c29; /* Darker orange */
+        box-shadow: 4px 4px 0px #c06c29;
+        cursor: pointer;
+        transition: all 0.1s ease-out;
+        text-align: center;
+        line-height: 1.2;
+      }
+      .research-button:hover {
+        background-color: #ff9d4f; /* Lighter orange */
+        transform: translate(2px, 2px);
+        box-shadow: 2px 2px 0px #c06c29;
+      }
+      .research-button:active {
+        transform: translate(4px, 4px);
+        box-shadow: 0px 0px 0px #c06c29;
+      }
+      .research-button i {
+        margin-right: 8px;
+      } /* Space icon */
+
+      #research-prompt {
+        display: none; /* Hidden by default */
+        background-color: var(--bg-secondary, #ffffff);
+        border: 3px solid var(--brand-secondary, #54b0bf);
+        padding: 25px;
+        margin-top: 30px;
+        text-align: center;
+        max-width: 42rem; /* max-w-2xl */
+        margin-left: auto;
+        margin-right: auto;
+        font-family: "Press Start 2P", sans-serif;
+        box-shadow: 6px 6px 0px var(--brand-primary, #057087);
+      }
+      #research-prompt h4 {
+        font-size: 0.9rem; /* 14px */
+        color: var(--accent-danger, #bc2231);
+        margin-bottom: 12px;
+      }
+      #research-prompt #current-topic {
+        font-size: 0.75rem; /* 12px */
+        color: var(--brand-primary, #057087);
+        background-color: #f0ede3; /* Light bg */
+        padding: 10px;
+        border: 2px solid var(--brand-secondary, #54b0bf);
+        display: block;
+        margin-bottom: 20px;
+        word-break: break-word; /* Wrap long claims */
+        font-family: sans-serif; /* More readable for claim text */
+        line-height: 1.5;
+      }
+      #research-prompt .research-options {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+      @media (min-width: 768px) {
+        #research-prompt .research-options {
+          flex-direction: row;
+          justify-content: center;
+          gap: 20px; /* More space on desktop */
+        }
+      }
+
+      /* Error message styling */
+      .error-result {
+        font-family: sans-serif;
+      }
+    </style>
   </head>
   <body data-theme="light">
     <!-- Background Video -->
@@ -37,7 +238,7 @@
     </div>
 
     <header class="bg-[#057087] text-white p-4 pixel-border relative">
-  <div class="container mx-auto flex justify-between items-center">
+      <div class="container mx-auto flex justify-between items-center">
         <!-- Hoverable MISINFO logo -->
         <div class="logo-container">
           <div class="concept concept-two">
@@ -51,8 +252,8 @@
           </div>
         </div>
 
-  <!-- Desktop Navigation (sparkle effect) -->
-  <nav class="desktop-nav hidden md:flex space-x-6 ml-auto">
+        <!-- Desktop Navigation (sparkle effect) -->
+        <nav class="desktop-nav hidden md:flex space-x-6 ml-auto">
           <a href="index.html" class="nav-link">
             <svg
               viewBox="0 0 96 96"
@@ -296,20 +497,31 @@
     </header>
 
     <main class="flex-1">
-      <!-- Fact Check Section -->
-      <section class="fact-check-section">
-        <div class="container mx-auto">
+      <section class="fact-check-section py-10 md:py-16">
+        <div class="container mx-auto px-4">
           <h2
             class="text-xl md:text-2xl font-bold text-center mb-8 text-[#057087]"
+            style="
+              color: var(--brand-primary);
+              text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.1);
+            "
           >
             REAL-TIME FACT CHECKER
           </h2>
-          <div class="bg-white p-6 pixel-border max-w-2xl mx-auto">
-            <p class="text-center text-[#BC2231] text-sm mb-4">
-              Verify any claim instantly against trusted sources
+          <div
+            class="bg-white p-6 md:p-8 pixel-border max-w-2xl mx-auto"
+            style="
+              background-color: var(--bg-card);
+              box-shadow: 6px 6px 0px var(--brand-primary);
+            "
+          >
+            <p
+              class="text-center text-[#BC2231] text-sm mb-4"
+              style="color: var(--accent-danger)"
+            >
+              Verify any claim instantly using AI analysis & web search
             </p>
 
-            <!-- Text Input -->
             <input
               type="text"
               placeholder="PASTE SUSPICIOUS CLAIM HERE..."
@@ -319,7 +531,12 @@
             />
 
             <button
-              class="w-full px-6 py-3 bg-[#057087] text-white hover-button text-sm md:text-base"
+              class="w-full px-6 py-3 bg-[#057087] text-white hover-button text-sm md:text-base pixel-border"
+              style="
+                background-color: var(--brand-primary);
+                border-color: var(--brand-primary);
+                box-shadow: 4px 4px 0px var(--brand-secondary);
+              "
               onclick="verifyClaim()"
             >
               VERIFY CLAIM
@@ -327,10 +544,17 @@
 
             <div
               class="mt-6 p-4 bg-[#F0EDE3] border-2 border-dashed border-[#54B0BF]"
+              style="
+                background-color: var(--bg-secondary);
+                border-color: var(--brand-secondary);
+              "
               aria-live="polite"
               id="results-display"
             >
-              <p class="text-center text-[#057087]">
+              <p
+                class="text-center text-[#057087]"
+                style="color: var(--brand-primary)"
+              >
                 Verification results will appear here...
               </p>
             </div>
@@ -338,15 +562,27 @@
         </div>
       </section>
 
-      <!-- Chatbot Floating Button -->
-      <!-- <div id="chatbot-button"><i class="fa-solid fa-robot"></i> Glitchy</div> -->
-
-      <!-- Chat Window -->
-      <!-- <div id="chat-window" class="hidden">
-        <div class="chat-header"><i class="fa-solid fa-robot"></i> Glitchy</div>
-        <div class="chat-body" id="chat-body"></div>
-        <input type="text" id="chat-input" placeholder="Ask me anything..." />
-      </div> -->
+      <div id="research-prompt">
+        <h4>Want to dig deeper?</h4>
+        <span id="current-topic">Claim will appear here</span>
+        <div class="research-options">
+          <button
+            class="research-button"
+            onclick="redirectToResearch('sources')"
+          >
+            <i class="fas fa-link"></i> Find Sources
+          </button>
+          <button
+            class="research-button"
+            onclick="redirectToResearch('questions')"
+          >
+            <i class="fas fa-question-circle"></i> Related Questions
+          </button>
+          <button class="research-button" onclick="redirectToResearch('cases')">
+            <i class="fas fa-history"></i> Similar Cases
+          </button>
+        </div>
+      </div>
     </main>
 
     <footer id="resources" class="bg-[#057087] text-white p-6 pixel-border">
@@ -356,24 +592,88 @@
           <div class="p-4 bg-[#54B0BF] pixel-border">
             <h4 class="font-bold mb-2">Fact-Checking/Verification Tools</h4>
             <ul class="text-sm">
-              <li><a href="https://snopes.com" target="_blank" rel="noopener noreferrer" class="hover:text-[#F38833]">Snopes</a></li>
-              <li><a href="https://www.factcheck.org" target="_blank" rel="noopener noreferrer" class="hover:text-[#F38833]">FactCheck.org</a></li>
-              <li><a href="https://toolbox.google.com/factcheck/explorer" target="_blank" rel="noopener noreferrer" class="hover:text-[#F38833]">Google Fact Check Explorer</a></li>
+              <li>
+                <a
+                  href="https://snopes.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="hover:text-[#F38833]"
+                  >Snopes</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://www.factcheck.org"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="hover:text-[#F38833]"
+                  >FactCheck.org</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://toolbox.google.com/factcheck/explorer"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="hover:text-[#F38833]"
+                  >Google Fact Check Explorer</a
+                >
+              </li>
             </ul>
           </div>
           <div class="p-4 bg-[#54B0BF] pixel-border">
             <h4 class="font-bold mb-2">Media Literacy & Education</h4>
             <ul class="text-sm">
-              <li><a href="https://newslit.org" target="_blank" rel="noopener noreferrer" class="hover:text-[#F38833]">News Literacy Project</a></li>
-              <li><a href="https://www.commonsense.org/education/digital-citizenship" target="_blank" rel="noopener noreferrer" class="hover:text-[#F38833]">Common Sense Media: Digital Citizenship</a></li>
+              <li>
+                <a
+                  href="https://newslit.org"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="hover:text-[#F38833]"
+                  >News Literacy Project</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://www.commonsense.org/education/digital-citizenship"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="hover:text-[#F38833]"
+                  >Common Sense Media: Digital Citizenship</a
+                >
+              </li>
             </ul>
           </div>
           <div class="p-4 bg-[#54B0BF] pixel-border">
             <h4 class="font-bold mb-2">Reporting Fake News or Getting Help</h4>
             <ul class="text-sm">
-              <li><a href="https://faq.whatsapp.com/744167155212887/" target="_blank" rel="noopener noreferrer" class="hover:text-[#F38833]">Report Misinformation (WhatsApp)</a></li>
-              <li><a href="https://www.facebook.com/help/181495968648557" target="_blank" rel="noopener noreferrer" class="hover:text-[#F38833]">Facebook Reporting</a></li>
-              <li><a href="https://cybercrime.gov.in/" target="_blank" rel="noopener noreferrer" class="hover:text-[#F38833]">Cyber Crime Reporting India</a></li>
+              <li>
+                <a
+                  href="https://faq.whatsapp.com/744167155212887/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="hover:text-[#F38833]"
+                  >Report Misinformation (WhatsApp)</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://www.facebook.com/help/181495968648557"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="hover:text-[#F38833]"
+                  >Facebook Reporting</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://cybercrime.gov.in/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="hover:text-[#F38833]"
+                  >Cyber Crime Reporting India</a
+                >
+              </li>
             </ul>
           </div>
         </div>

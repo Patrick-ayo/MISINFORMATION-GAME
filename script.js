@@ -3,13 +3,11 @@ function toggleTheme() {
   const body = document.body;
   const currentTheme = body.getAttribute("data-theme");
   const newTheme = currentTheme === "light" ? "dark" : "light";
-
   body.setAttribute("data-theme", newTheme);
 
-  // Update theme icons
+  // Update theme icons (Check if elements exist)
   const themeIcon = document.getElementById("theme-icon");
   const themeIconMobile = document.getElementById("theme-icon-mobile");
-
   if (newTheme === "dark") {
     if (themeIcon) themeIcon.className = "fas fa-sun";
     if (themeIconMobile) themeIconMobile.className = "fas fa-sun";
@@ -17,31 +15,34 @@ function toggleTheme() {
     if (themeIcon) themeIcon.className = "fas fa-moon";
     if (themeIconMobile) themeIconMobile.className = "fas fa-moon";
   }
-
-  // Save theme preference
   localStorage.setItem("theme", newTheme);
 }
 
 // Load saved theme preference
 function loadTheme() {
-  const savedTheme = localStorage.getItem("theme") || "light";
+  const savedTheme = localStorage.getItem("theme") || "light"; // Default to light
   document.body.setAttribute("data-theme", savedTheme);
 
-  // Update theme icons
+  // Update theme icons based on loaded theme
   const themeIcon = document.getElementById("theme-icon");
   const themeIconMobile = document.getElementById("theme-icon-mobile");
-
   if (savedTheme === "dark") {
     if (themeIcon) themeIcon.className = "fas fa-sun";
     if (themeIconMobile) themeIconMobile.className = "fas fa-sun";
+  } else {
+    // Default to moon if light
+    if (themeIcon) themeIcon.className = "fas fa-moon";
+    if (themeIconMobile) themeIconMobile.className = "fas fa-moon";
   }
 }
 
 // Mobile navigation toggle
 function toggleMobileNav() {
   const mobileNav = document.querySelector(".mobile-nav");
-  mobileNav.classList.toggle("nav-visible");
-  mobileNav.classList.toggle("nav-hidden");
+  if (mobileNav) {
+    mobileNav.classList.toggle("nav-visible");
+    mobileNav.classList.toggle("nav-hidden");
+  }
 }
 
 // Fullscreen game functionality
@@ -77,7 +78,9 @@ function enterFullscreenGame() {
   const footer = document.querySelector("footer");
   const mainContent = document.querySelector("main");
   const iframe = document.getElementById("rpg-iframe");
-  const iframeWrapper = document.getElementById("inpage-iframe-wrapper") || document.getElementById("game-iframe-wrapper");
+  const iframeWrapper =
+    document.getElementById("inpage-iframe-wrapper") ||
+    document.getElementById("game-iframe-wrapper");
 
   // Hide header/footer but keep the main content area visible (so page doesn't blank out completely)
   if (header) header.style.display = "none";
@@ -167,7 +170,7 @@ function handleEscapeKey(event) {
 document.addEventListener("click", function (event) {
   const mobileNav = document.querySelector(".mobile-nav");
   const hamburger = document.querySelector(".hamburger-menu");
-
+  // Ensure elements exist before checking contains
   if (
     mobileNav &&
     mobileNav.classList.contains("nav-visible") &&
@@ -183,12 +186,15 @@ document.addEventListener("click", function (event) {
 // Responsive design adjustments
 function handleResize() {
   const mobileNav = document.querySelector(".mobile-nav");
-  if (window.innerWidth > 768 && mobileNav) {
+  if (
+    window.innerWidth > 768 &&
+    mobileNav &&
+    mobileNav.classList.contains("nav-visible")
+  ) {
     mobileNav.classList.remove("nav-visible");
     mobileNav.classList.add("nav-hidden");
   }
 }
-
 window.addEventListener("resize", handleResize);
 
 // Image upload functionality
@@ -297,125 +303,168 @@ function removeImage() {
 
 function showError(message) {
   const results = document.getElementById("results-display");
-  results.innerHTML = `
-        <p class="text-center text-[#BC2231]">❌ ERROR</p>
-        <p class="text-center text-[#057087] text-xs mt-2">${message}</p>
-    `;
-
-  setTimeout(() => {
+  if (results) {
     results.innerHTML = `
-            <p class="text-center text-[#057087]">Verification results will appear here...</p>
-        `;
-  }, 3000);
+          <p class="text-center text-[#BC2231]" style="color: var(--accent-danger);">❌ ERROR</p>
+          <p class="text-center text-[#057087] text-xs mt-2" style="color: var(--brand-primary);">${message}</p>
+      `;
+    // Clear the error after a few seconds
+    setTimeout(() => {
+      if (results.innerHTML.includes("❌ ERROR")) {
+        // Avoid clearing successful results
+        results.innerHTML = `
+                 <p class="text-center text-[#057087]" style="color: var(--brand-primary);">Verification results will appear here...</p>
+             `;
+      }
+    }, 4000); // Increased timeout
+  }
 }
-
 // Fact checker functionality
 // function verifyClaim() // Updated fact checker functionality that connects to your backend
 async function verifyClaim() {
   const input = document.getElementById("fact-check-input");
   const results = document.getElementById("results-display");
+  const researchPrompt = document.getElementById("research-prompt"); // Get the research prompt div
 
-  if (!input.value.trim() && !uploadedImage) {
-    showError("Please provide a text claim or upload an image to verify.");
+  // Basic validation
+  if (!input || !results) {
+    console.error("Fact check input or results display element not found.");
+    return;
+  }
+  const claim = input.value.trim();
+  if (!claim) {
+    showError("Please paste a suspicious claim into the box."); // Use showError for consistency
     return;
   }
 
-  const claim = input.value.trim();
-
-  // Show loading state
+  // 1. Show loading state in results display
   results.innerHTML = `
     <div class="text-center">
       <div class="loading-spinner"></div>
-      <p class="text-[#BC2231] mt-2">🔍 ANALYZING...</p>
-      <p class="text-[#057087] text-xs mt-2">
-        ${
-          uploadedImage
-            ? "Processing image and checking against databases..."
-            : "Checking against trusted databases..."
-        }
+      <p class="text-[#BC2231] mt-2" style="color: var(--accent-danger);">🔍 ANALYZING...</p>
+      <p class="text-[#057087] text-xs mt-2" style="color: var(--brand-primary);">
+        Checking claim against web sources...
       </p>
     </div>
   `;
 
-  try {
-    // Prepare the message for the chatbot
-    let message;
-    if (uploadedImage && claim) {
-      message = `Please fact-check this claim with image context: "${claim}". Provide a detailed analysis including: 1) Verification status (True/False/Partially True/Unverifiable), 2) Evidence and sources, 3) Context and background, 4) Any misinformation patterns detected.`;
-    } else if (uploadedImage) {
-      message = `Please analyze this uploaded image for potential misinformation. Check for: 1) Image authenticity, 2) Content accuracy, 3) Source verification, 4) Any manipulation signs.`;
-    } else {
-      message = `Please fact-check this claim: "${claim}". Provide a detailed analysis including: 1) Verification status (True/False/Partially True/Unverifiable), 2) Evidence and sources, 3) Context and background, 4) Any misinformation patterns detected.`;
-    }
+  // 2. Hide "More Research" prompt if it's already visible
+  if (researchPrompt) {
+    researchPrompt.style.display = "none";
+  }
 
-    // Send to your backend
-    const response = await fetch("http://localhost:3000/api/chatbot", {
+  try {
+    // 3. Send claim to your backend API
+    const response = await fetch("http://localhost:8080/api/check", {
+      // Use correct port
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message }),
+      body: JSON.stringify({ query: claim }), // Backend expects 'query'
     });
 
+    // Handle HTTP errors (like 404, 500)
     if (!response.ok) {
-      throw new Error(`Server error: ${response.status}`);
+      const errorData = await response
+        .json()
+        .catch(() => ({ error: "Server returned an invalid response" }));
+      throw new Error(
+        `Server error (${response.status}): ${
+          errorData.error || response.statusText
+        }`
+      );
     }
 
-    const data = await response.json();
-    const botReply = data.reply || "Unable to verify this claim at the moment.";
+    const data = await response.json(); // Expects { conclusion, summary, sources }
 
-    // Display the results from your AI chatbot
+    // Validate response structure (basic check)
+    if (
+      !data ||
+      typeof data.conclusion === "undefined" ||
+      typeof data.summary === "undefined" ||
+      !Array.isArray(data.sources)
+    ) {
+      console.error("Invalid response structure received from server:", data);
+      throw new Error("Received an invalid response format from the server.");
+    }
+
+    // 4. Build the HTML for the results
+    //    Use lowercase and replace spaces with hyphens for the CSS class
+    const conclusionText = data.conclusion || "Analysis"; // Fallback text
+    const conclusionClass = `result-badge-${conclusionText
+      .toLowerCase()
+      .replace(/\s+/g, "-")}`;
+
+    // Generate HTML list for sources
+    const sourcesHTML =
+      data.sources.length > 0
+        ? data.sources
+            .map(
+              (url) => `
+          <li class="result-source-item">
+            <i class="fas fa-link source-icon"></i>
+            <a href="${url}" target="_blank" rel="noopener noreferrer" title="Visit source: ${url}">${url}</a>
+          </li>
+        `
+            )
+            .join("")
+        : '<li style="font-family: sans-serif; color: var(--text-secondary);">No specific sources cited for this summary.</li>'; // Message when no sources
+
+    // Escape single quotes in the claim for use in the 'More Research' button's onclick
+    const escapedClaim = claim.replace(/'/g, "\\'");
+
+    // 5. Display the formatted results
     results.innerHTML = `
       <div class="fact-check-result">
-        <div class="result-header mb-4">
-          <h3 class="text-lg font-bold text-[#057087] mb-2">🔍 AI Fact-Check Results</h3>
-          ${
-            claim
-              ? `
-            <div class="claim-box p-3 bg-gray-100 border-l-4 border-[#54B0BF] mb-3">
-              <p class="text-sm text-gray-700"><strong>Claim:</strong> "${claim}"</p>
-            </div>
-          `
-              : ""
-          }
-          ${
-            uploadedImage
-              ? `
-            <div class="image-box p-3 bg-blue-50 border-l-4 border-[#54B0BF] mb-3">
-              <p class="text-sm text-blue-700">📸 <strong>Image Analysis:</strong> Uploaded image processed</p>
-            </div>
-          `
-              : ""
-          }
+
+        <div class="result-badge ${conclusionClass}">
+          ${conclusionText}
         </div>
-        
-        <div class="analysis-result p-4 bg-white border-2 border-[#54B0BF] rounded">
-          <div class="whitespace-pre-wrap text-sm text-[#057087] leading-relaxed">${botReply}</div>
+
+        <div class="claim-box p-3 bg-gray-100 border-l-4 border-[#54B0BF] mb-4" style="background-color: var(--bg-secondary); border-color: var(--brand-secondary);">
+          <p class="text-sm text-gray-700" style="font-family: sans-serif; color: var(--text-secondary);">
+            <strong>Claim:</strong> "${claim}"
+          </p>
         </div>
-        
-        <div class="result-footer mt-4 text-center">
-          <p class="text-xs text-gray-600">
-            🤖 AI-powered analysis • ⚠️ Always cross-reference with multiple trusted sources
+
+        <h4 class="result-section-title">Summary:</h4>
+        <p class="result-summary">${data.summary.trim()}</p>
+
+        <h4 class="result-section-title">Sources:</h4>
+        <ul class="result-sources-list">
+          ${sourcesHTML}
+        </ul>
+
+        <div class="text-center mt-6">
+          <button class="research-button" onclick="showResearchPrompt('${escapedClaim}')">
+            <i class="fas fa-search-plus"></i> More Research
+          </button>
+        </div>
+
+        <div class="result-footer mt-6 text-center">
+          <p class="text-xs text-gray-600" style="color: var(--text-secondary);">
+            🤖 AI-powered analysis • ⚠️ Always cross-reference multiple trusted sources
           </p>
         </div>
       </div>
     `;
 
-    // Show research prompt after results
-    const topic = claim || "Uploaded Image Analysis";
-    showResearchPrompt(topic);
+    // 6. Show the "More Research" prompt after displaying results
+    //    (The button click will call showResearchPrompt)
   } catch (error) {
-    console.error("Fact-check error:", error);
+    console.error("Fact-check fetch error:", error);
+    // Display a user-friendly error message
     results.innerHTML = `
-      <div class="error-result p-4 bg-red-50 border-2 border-red-200 rounded">
-        <p class="text-red-700 font-bold mb-2">❌ Verification Error</p>
-        <p class="text-red-600 text-sm">
-          Unable to connect to fact-checking service. Please check your internet connection and try again.
+      <div class="error-result p-4 bg-red-50 border-2 border-red-200 rounded" style="background-color: rgba(188, 34, 49, 0.1); border-color: var(--accent-danger);">
+        <p class="text-red-700 font-bold mb-2" style="color: var(--accent-danger);">❌ VERIFICATION ERROR</p>
+        <p class="text-red-600 text-sm" style="color: var(--accent-danger); font-family: sans-serif;">
+          Oops! Something went wrong while trying to verify the claim.
         </p>
-        <p class="text-xs text-red-500 mt-2">
-          Error: ${error.message}
+        <p class="text-xs text-red-500 mt-2" style="color: var(--accent-danger); font-family: sans-serif;">
+          <strong>Details:</strong> ${error.message}
         </p>
-        <div class="mt-3 p-2 bg-yellow-50 border border-yellow-200 rounded">
-          <p class="text-yellow-800 text-xs">
-            💡 <strong>Tip:</strong> Make sure your server is running on http://localhost:5000
+        <div class="mt-3 p-2 bg-yellow-50 border border-yellow-200 rounded" style="background-color: rgba(243, 136, 51, 0.1); border-color: var(--accent-warning);">
+          <p class="text-yellow-800 text-xs" style="color: var(--accent-warning); font-family: sans-serif;">
+            💡 <strong>Tip:</strong> Ensure the backend server is running at http://localhost:8080 and check the server's console logs for more specific errors.
           </p>
         </div>
       </div>
@@ -427,10 +476,11 @@ async function verifyClaim() {
 function showResearchPrompt(topic) {
   const researchPrompt = document.getElementById("research-prompt");
   const currentTopic = document.getElementById("current-topic");
-
   if (researchPrompt && currentTopic) {
-    currentTopic.textContent = topic;
-    researchPrompt.style.display = "block";
+    currentTopic.textContent = topic; // Update the topic display
+    researchPrompt.style.display = "block"; // Show the prompt section
+  } else {
+    console.error("Research prompt elements not found.");
   }
 }
 
@@ -455,20 +505,23 @@ function openResearchPanel(type) {
 
 // Redirect to research page
 function redirectToResearch(type) {
-  const currentTopic =
-    document.getElementById("current-topic")?.textContent || "Current Topic";
+  const currentTopicElement = document.getElementById("current-topic");
+  const currentTopic = currentTopicElement
+    ? currentTopicElement.textContent
+    : "Unknown Topic";
   const encodedTopic = encodeURIComponent(currentTopic);
-
-  // Redirect to research page with topic parameter
+  // Make sure you have a 'research.html' page to handle these parameters
+  console.log(
+    `Redirecting to research page for topic: ${currentTopic}, type: ${type}`
+  );
   window.location.href = `research.html?topic=${encodedTopic}&type=${type}`;
 }
 
 // Close research panel
 function closeResearchPanel() {
-  const researchPanel = document.getElementById("research-panel");
-
+  const researchPanel = document.getElementById("research-panel"); // Assuming you have a panel element
   if (researchPanel) {
-    researchPanel.classList.remove("active");
+    researchPanel.classList.remove("active"); // Example class
     document.body.style.overflow = "auto";
   }
 }
@@ -491,32 +544,45 @@ document.addEventListener("click", function (event) {
 
 // Initialize image upload when DOM is loaded
 document.addEventListener("DOMContentLoaded", function () {
-  // Inject page-specific CSS file based on current page
+  // Load theme and set initial responsive state first
+  loadTheme();
+  handleResize();
+
+  // Initialize image upload only if relevant elements exist on the page
+  // (Removed as per previous step, but kept structure in case you add it back)
+  // if (document.getElementById("upload-zone")) {
+  //   initializeImageUpload();
+  // }
+
+  // Inject page-specific CSS dynamically
   try {
     const head = document.head;
-    const file = (
-      location.pathname.split("/").pop() || "index.html"
-    ).toLowerCase();
+    const path = window.location.pathname;
+    // Handle root path ('/') correctly
+    const pageName =
+      path === "/" ? "index.html" : path.substring(path.lastIndexOf("/") + 1);
+    const file = pageName || "index.html"; // Default to index.html if empty
     const map = {
-      "": "home.css",
       "index.html": "home.css",
       "research.html": "research.css",
       "fact-check.html": "fact-check.css",
       "game.html": "game.css",
       "resources.html": "resources.css",
     };
-    const cssFile = map[file] || null;
+    const cssFile = map[file.toLowerCase()];
     if (cssFile) {
-      const link = document.createElement("link");
-      link.rel = "stylesheet";
-      link.href = cssFile;
-      head.appendChild(link);
+      // Check if the link already exists
+      if (!document.querySelector(`link[href="${cssFile}"]`)) {
+        const link = document.createElement("link");
+        link.rel = "stylesheet";
+        link.href = cssFile; // Assuming CSS files are in the same directory
+        head.appendChild(link);
+        console.log(`Loaded page-specific CSS: ${cssFile}`);
+      }
     }
   } catch (e) {
     console.warn("Page CSS injection failed:", e);
   }
-
-  initializeImageUpload();
 });
 
 // Initialize
@@ -525,11 +591,11 @@ handleResize();
 
 // --- Hexagon background overlay logic ---
 (function initHexagonBackground() {
-  const canvas = document.getElementById('hexagon-canvas');
-  const container = document.getElementById('hexagon-bg');
+  const canvas = document.getElementById("hexagon-canvas");
+  const container = document.getElementById("hexagon-bg");
   if (!canvas || !container) return;
 
-  const ctx = canvas.getContext('2d');
+  const ctx = canvas.getContext("2d");
   let DPR = window.devicePixelRatio || 1;
 
   function resize() {
@@ -537,8 +603,8 @@ handleResize();
     const rect = container.getBoundingClientRect();
     canvas.width = Math.round(rect.width * DPR);
     canvas.height = Math.round((window.innerHeight - rect.top) * DPR);
-    canvas.style.width = rect.width + 'px';
-    canvas.style.height = (window.innerHeight - rect.top) + 'px';
+    canvas.style.width = rect.width + "px";
+    canvas.style.height = window.innerHeight - rect.top + "px";
     ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
     draw();
   }
@@ -546,8 +612,8 @@ handleResize();
   // hexagon grid parameters (similar to animate-ui defaults)
   const hexSize = 50; // base size (px)
   const hexMargin = 6; // spacing
-  const strokeColor = 'rgba(255,255,255,0.08)';
-  const hoverColor = 'rgba(243,136,51,0.95)';
+  const strokeColor = "rgba(255,255,255,0.08)";
+  const hoverColor = "rgba(243,136,51,0.95)";
 
   let pointer = { x: -9999, y: -9999 };
 
@@ -555,7 +621,7 @@ handleResize();
     const w = Math.sqrt(3) * size;
     const h = 2 * size;
     const x = col * (w + hexMargin) + (row % 2) * (w / 2);
-    const y = row * (3 / 4 * h + hexMargin);
+    const y = row * ((3 / 4) * h + hexMargin);
     return { x, y };
   }
 
@@ -586,13 +652,25 @@ handleResize();
         const lineAlpha = Math.min(0.12, alpha * 0.2) + 0.02;
 
         // draw hex
-        drawHexagon(ctx, centerX, centerY, size - 6, `rgba(255,255,255,${lineAlpha})`);
+        drawHexagon(
+          ctx,
+          centerX,
+          centerY,
+          size - 6,
+          `rgba(255,255,255,${lineAlpha})`
+        );
 
         // if close to pointer, draw glow
         if (dist < 120) {
           const t = 1 - dist / 120;
           ctx.beginPath();
-          drawHexagon(ctx, centerX, centerY, size * (0.4 + 0.6 * t), hoverColor.replace('0.95', String(0.4 * t)));
+          drawHexagon(
+            ctx,
+            centerX,
+            centerY,
+            size * (0.4 + 0.6 * t),
+            hoverColor.replace("0.95", String(0.4 * t))
+          );
         }
       }
     }
@@ -605,7 +683,8 @@ handleResize();
     for (let i = 0; i < 6; i++) {
       const x = cx + s * Math.cos(a * i + Math.PI / 6);
       const y = cy + s * Math.sin(a * i + Math.PI / 6);
-      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      if (i === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
     }
     ctx.closePath();
     ctx.strokeStyle = strokeStyle || strokeColor;
@@ -616,28 +695,31 @@ handleResize();
   // pointer events: only enable when user moves over top area below navbar
   function onPointerMove(e) {
     const rect = canvas.getBoundingClientRect();
-    const x = (e.clientX - rect.left);
-    const y = (e.clientY - rect.top);
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
     pointer.x = x;
     pointer.y = y;
-    container.classList.add('hexagon-visible');
-    container.classList.remove('hexagon-hidden');
-    container.classList.add('hover-active');
+    container.classList.add("hexagon-visible");
+    container.classList.remove("hexagon-hidden");
+    container.classList.add("hover-active");
     draw();
   }
 
   function onPointerLeave() {
-    pointer.x = -9999; pointer.y = -9999;
-    container.classList.remove('hover-active');
-    container.classList.remove('hexagon-visible');
-    container.classList.add('hexagon-hidden');
+    pointer.x = -9999;
+    pointer.y = -9999;
+    container.classList.remove("hover-active");
+    container.classList.remove("hexagon-visible");
+    container.classList.add("hexagon-hidden");
     draw();
   }
 
   // activate when mouse enters main content area (below header)
   function parseAlpha(colorStr) {
     if (!colorStr) return 1;
-    const rgba = colorStr.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/i);
+    const rgba = colorStr.match(
+      /rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/i
+    );
     if (rgba) return rgba[4] !== undefined ? parseFloat(rgba[4]) : 1;
     // unknown formats assume opaque
     return 1;
@@ -647,34 +729,37 @@ handleResize();
     let el = document.elementFromPoint(clientX, clientY);
     if (!el) return true;
     // If pointer is over the hexagon canvas itself or its container, allow effect
-    if (el.id === 'hexagon-canvas' || el.closest('#hexagon-bg')) return true;
+    if (el.id === "hexagon-canvas" || el.closest("#hexagon-bg")) return true;
     // If pointer is over an iframe (game) treat as opaque
-    if (el.tagName === 'IFRAME' || el.closest('iframe')) return false;
+    if (el.tagName === "IFRAME" || el.closest("iframe")) return false;
 
     // Walk up parents; if any visible ancestor has a background-image or opaque background color or reduced opacity -> opaque
     while (el && el !== document.documentElement) {
       const cs = window.getComputedStyle(el);
       if (!cs) break;
-      if (cs.display === 'none' || cs.visibility === 'hidden') {
+      if (cs.display === "none" || cs.visibility === "hidden") {
         el = el.parentElement;
         continue;
       }
       const bgImage = cs.backgroundImage;
-      if (bgImage && bgImage !== 'none') return false;
+      if (bgImage && bgImage !== "none") return false;
       const bgColor = cs.backgroundColor;
       const alpha = parseAlpha(bgColor);
       if (alpha > 0) return false; // non-transparent background
-      const opacity = parseFloat(cs.opacity || '1');
+      const opacity = parseFloat(cs.opacity || "1");
       if (!isNaN(opacity) && opacity < 1) return false; // semi-transparent element (consider as non-transparent area)
       el = el.parentElement;
     }
     return true;
   }
 
-  window.addEventListener('mousemove', function (e) {
-    const header = document.querySelector('header');
+  window.addEventListener("mousemove", function (e) {
+    const header = document.querySelector("header");
     const headerBottom = header ? header.getBoundingClientRect().bottom : 64;
-    if (e.clientY > headerBottom && isPointOverTransparent(e.clientX, e.clientY)) {
+    if (
+      e.clientY > headerBottom &&
+      isPointOverTransparent(e.clientX, e.clientY)
+    ) {
       onPointerMove(e);
     } else {
       // if pointer is over header or over an opaque element, hide overlay
@@ -682,8 +767,8 @@ handleResize();
     }
   });
 
-  window.addEventListener('mouseleave', onPointerLeave);
-  window.addEventListener('resize', resize);
+  window.addEventListener("mouseleave", onPointerLeave);
+  window.addEventListener("resize", resize);
   // initial
   resize();
 })();
