@@ -355,12 +355,15 @@ async function verifyClaim() {
 
   try {
     // 3. Send claim to your backend API
-    const response = await fetch("http://localhost:8080/api/check", {
-      // Use correct port
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ query: claim }), // Backend expects 'query'
-    });
+    const response = await fetch(
+      "https://misinfo-mau4.onrender.com/api/check",
+      {
+        // Use correct port
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ query: claim }), // Backend expects 'query'
+      }
+    );
 
     // Handle HTTP errors (like 404, 500)
     if (!response.ok) {
@@ -464,7 +467,7 @@ async function verifyClaim() {
         </p>
         <div class="mt-3 p-2 bg-yellow-50 border border-yellow-200 rounded" style="background-color: rgba(243, 136, 51, 0.1); border-color: var(--accent-warning);">
           <p class="text-yellow-800 text-xs" style="color: var(--accent-warning); font-family: sans-serif;">
-            💡 <strong>Tip:</strong> Ensure the backend server is running at http://localhost:8080 and check the server's console logs for more specific errors.
+            💡 <strong>Tip:</strong> Ensure the backend server is running at https://misinfo-mau4.onrender.com and check the server's console logs for more specific errors.
           </p>
         </div>
       </div>
@@ -795,11 +798,14 @@ input.addEventListener("keypress", async function (e) {
 
     // Send message to backend
     try {
-      const response = await fetch("http://localhost:3000/api/chatbot", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: msg }),
-      });
+      const response = await fetch(
+        "https://misinfo-mau4.onrender.com/api/chatbot",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: msg }),
+        }
+      );
 
       const data = await response.json();
       const botReply = data.reply || "⚠️ Sorry, I couldn't process that.";
