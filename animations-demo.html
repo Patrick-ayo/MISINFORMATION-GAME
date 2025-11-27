@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Animations Demo — MISINFO</title>
+    <link rel="stylesheet" href="animations-demo.css" />
+  </head>
+  <body>
+    <main class="wrap">
+      <h1>Animations Demo (explanations + code)</h1>
+
+      <section class="demo">
+        <h2>1 — Navbar Sparkle (CSS keyframes)</h2>
+        <p class="desc">A small SVG 'sparkle' scales in using the <code>@keyframes sparkle</code> animation. This is triggered on hover and staggered via CSS variables.</p>
+        <nav class="demo-nav">
+          <a class="nav-link" href="#">
+            <svg class="spark" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/></svg>
+            <span>SPARKLE</span>
+          </a>
+        </nav>
+      </section>
+
+      <section class="demo">
+        <h2>2 — Logo Letter Hover (transform + transition)</h2>
+        <p class="desc">Each letter scales on hover using <code>transform: scale()</code> with a <code>transition</code> for smooth motion.</p>
+        <div class="logo-demo">
+          <span class="logo-letter">M</span>
+          <span class="logo-letter">I</span>
+          <span class="logo-letter">S</span>
+          <span class="logo-letter">I</span>
+          <span class="logo-letter">N</span>
+          <span class="logo-letter">F</span>
+          <span class="logo-letter">O</span>
+        </div>
+      </section>
+
+      <section class="demo">
+        <h2>3 — Nav Glare (background-clip sheen)</h2>
+        <p class="desc">A gradient is clipped to the text and moved on hover to create a sliding glare effect.</p>
+        <a class="glare-link" href="#">GLARE</a>
+      </section>
+
+      <section class="demo">
+        <h2>4 — Chat Button Float (keyframes)</h2>
+        <p class="desc">A simple bobbing effect based on <code>@keyframes</code> applied with <code>animation: floatWave 3s ease-in-out infinite</code>.</p>
+        <button class="chat-btn">Chat</button>
+      </section>
+
+      <section class="demo">
+        <h2>5 — Spinner (keyframes)</h2>
+        <p class="desc">Continuous rotation using <code>@keyframes spin</code>.</p>
+        <div class="spinner" aria-hidden="true"></div>
+      </section>
+
+      <section class="demo">
+        <h2>6 — Hover button & placeholder (transitions)</h2>
+        <p class="desc">Simple hover scaling and shadow for buttons and placeholders.</p>
+        <button class="hover-button">Hover me</button>
+        <div class="placeholder">Placeholder card</div>
+      </section>
+
+      <section class="demo">
+        <h2>7 — Hexagon Canvas (basic example)</h2>
+        <p class="desc">A very small canvas demo that draws hexagons and responds to the pointer — uses <code>requestAnimationFrame</code> to continuously redraw.</p>
+        <div class="hexagon-bg" id="hexagon-bg">
+          <canvas id="hexagon-canvas" width="800" height="240"></canvas>
+        </div>
+      </section>
+
+      <section class="demo">
+        <h2>8 — requestAnimationFrame demo (rotating square)</h2>
+        <p class="desc">Shows how rAF drives a per-frame update loop similar to simple game loops.</p>
+        <canvas id="raf-canvas" width="240" height="240" style="border:1px solid #ccc"></canvas>
+      </section>
+
+      <footer class="small">This demo is local; open <code>animations-demo.html</code> in a browser. See comments in <code>animations-demo.js</code> for implementation notes.</footer>
+    </main>
+    <script src="animations-demo.js"></script>
+  </body>
+</html>
