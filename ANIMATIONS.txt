@@ -1,0 +1,74 @@
+Project Animations Summary
+==========================
+
+This file lists the animated effects found across the project, their type, where the code lives, and a short description of what the animation does.
+
+1) Navbar "Sparkle" (CSS keyframes)
+- Files: `styles.css`, `navbar.txt`, `fact-check.html`, `index.html`, `resources.html`
+- Type: CSS @keyframes animation (`@keyframes sparkle`) + `animation` property on SVG elements
+- Description: Small SVG "sparkle" icons inside nav links animate with scale/transform using the `sparkle` keyframes. Triggered on hover; timing uses CSS variables to stagger.
+
+2) Hoverable MISINFO logo (hover scale / transform)
+- Files: `styles.css`, `title.txt` (references)
+- Type: CSS transform/transition on hover
+- Description: Each letter scales up and switches fill on hover (`transform: scale(1.5)`), using transitions for smoothness.
+
+3) Nav link glare (background-clip animated sheen)
+- Files: `styles.css`
+- Type: CSS background gradient animation (background-position change via transition)
+- Description: The nav link shows a sliding glare using a gradient background clipped to text; movement controlled via CSS variables on hover.
+
+4) Hexagon background overlay (Canvas + JS animation loop)
+- Files: `script.js`, `index.html`
+- Type: Canvas drawing loop + `requestAnimationFrame` + pointer-driven falloff
+- Description: A hex grid is drawn to an HTML5 canvas (`#hexagon-canvas`) with outlines and glow that respond to the cursor. The draw loop is driven by JS math and rAF and uses DPR scaling.
+
+5) Hexagon reveal/hide (CSS transitions)
+- Files: `styles.css`, `script.js`
+- Type: CSS transition of `opacity` via classes `.hexagon-visible` / `.hexagon-hidden`
+- Description: The container toggles opacity when the pointer enters/leaves the overlay area so lines fade in/out smoothly.
+
+6) Chatbot floating button (floatWave keyframes)
+- Files: `styles.css`
+- Type: CSS @keyframes `floatWave` with `animation: floatWave 3s ease-in-out infinite`
+- Description: Floating up/down motion applied to the chatbot floating button to create a bobbing effect.
+
+7) Buttons and placeholders hover effects (scale/transform + box-shadow)
+- Files: `styles.css`, `game.html`
+- Type: CSS `:hover` transforms and transition
+- Description: Buttons (`.hover-button`, `.button_inner`) and `.game-placeholder` scale slightly and apply shadows on hover for feedback.
+
+8) Fact-check page spinner (CSS keyframes `spin`)
+- Files: `fact-check.html`
+- Type: CSS @keyframes `spin` with `animation: spin 1s linear infinite`
+- Description: A small spinner icon or element rotates continuously.
+
+9) Login animations (multiple generated keyframes)
+- Files: `login.txt`
+- Type: Multiple CSS `@keyframes` (eg. `spot-*`, `spew`, `final`, `finalbox`, `tick`, `rotate`, `down`, `opacity`)
+- Description: A set of SASS-like animations controlling staged login box effects, spots, rotation, spew/emission effects and sequencing.
+
+10) Game (RPG Maker / Pixi / Effekseer) runtime animations
+- Files: `game2mz/js/libs/*`, `game2mz/js/rpg_managers.js`, `game2mz/css/game.css`
+- Type: Library-managed animations using `requestAnimationFrame` (Pixi.js, effekseer, game loop), plus CSS `@keyframes` (eg. `fadein`, `spin` in game CSS)
+- Description: The exported RPG Maker game uses multiple libraries and rAF loops for sprite rendering, particle/effects (Effekseer), and engine timing. Several CSS animations support UI elements in the game export.
+
+11) FPS meter and helpers (rAF polyfills / usage)
+- Files: `game2mz/js/libs/fpsmeter.js`, `game2mz/js/libs/iphone-inline-video.browser.js`
+- Type: requestAnimationFrame timing loops and polyfills
+- Description: Utility code that uses rAF to measure and schedule frame updates.
+
+12) Misc transforms and transitions across the site
+- Files: `styles.css`, `fact-check.html`, multiple HTML pages
+- Type: CSS transitions (transform/translate/opacity) used for menu show/hide, mobile nav, hover states, and header blur/backdrop animations.
+- Description: These are not explicit keyframe animations but rely on `transition` + `transform`/`opacity` to animate UI state changes (mobile nav slide, header backdrop, nav link movement, button transitions).
+
+Notes and recommendations
+- The primary interactive animations are split between CSS-driven animations (keyframes and transitions) and JS-driven canvas/game loops (rAF). Converting to a framework like React should preserve the CSS keyframes as-is; for JS animations:
+  - Keep the hexagon canvas logic inside a React component and attach/detach pointer listeners in lifecycle hooks (useEffect). Ensure the canvas DOM node is accessed via refs and `requestAnimationFrame` is cancelled on unmount.
+  - Keep the game iframe as a persistent component to avoid reloads; request fullscreen on its wrapper element.
+  - Game2mz libraries (Pixi/Effekseer) are third-party bundles and should remain in the public assets; mount the game's `index.html` in an iframe or adapt the export to be embedded into a React route.
+
+If you want, I can: 1) generate a small `Animations.md` with code excerpts for each animation, or 2) start converting the site to React by scaffolding a `create-react-app` (or Vite + React) project and migrating one page (e.g., `index.html`) into components while preserving animations. Which do you prefer?
+
+-- End of summary
