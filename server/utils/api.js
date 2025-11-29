@@ -1,3 +1,4 @@
+/* mumbai hacks */
 const axios = require("axios");
 const config = require("../config");
 
@@ -52,7 +53,13 @@ exports.fetchAiResponse = async (prompt) => {
   try {
     const response = await axios.request(options);
     console.log("  [CLIENT] Successfully fetched AI response.");
-    const content = response.data.choices[0].message.content;
+    let content = response.data.choices[0].message.content;
+
+    content = content
+  .replace(/``````/g, "")
+  .replace(/^\s+|\s+$/g, "");
+
+  
     return JSON.parse(content);
   } catch (error) {
     console.error(
