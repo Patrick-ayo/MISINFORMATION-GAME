@@ -1,10 +1,11 @@
+/* mumbai hacks */
 // require("dotenv").config();
 
 const config = {
   port: process.env.PORT || 3000,
   aiApiKey: process.env.AI_API_KEY,
   aiApiUrl: process.env.AI_API_URL,
-  aiModelName: process.env.AI_MODEL_NAME,
+  aiModelName: "provider-5/gpt-4o-mini",
   searchApiKey: process.env.SEARCH_API_KEY,
   searchApiUrl: process.env.SEARCH_API_URL,
 };
