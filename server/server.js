@@ -2,28 +2,50 @@ require("dotenv").config();
 
 const express = require("express");
 const cors = require("cors");
-const config = require("./config"); // Automatically loads config/index.js
+const cookieParser = require("cookie-parser");
+
+const config = require("./config"); // should export { port, ... }
+const { connectDB } = require("./config/db"); // ensure you export connectDB from config/db.js
 const factCheckRoutes = require("./routes/factCheck.js");
+const authRoutes = require("./routes/auth.js");
+const historyRoutes = require("./routes/history.js");
 const { errorHandler } = require("./utils/errorHandler.js");
 
 const app = express();
 
+// middleware
 app.use(cors());
-
-// Middleware to parse JSON bodies
 app.use(express.json());
+app.use(cookieParser());
 
-// Health check endpoint
-app.get("/", (req, res) => {
-  res.json({ status: "API is running" });
-});
+// health
+app.get("/", (req, res) => res.json({ status: "API is running" }));
 
-// Main API Routes
+// routes
 app.use("/api", factCheckRoutes);
+app.use("/auth", authRoutes);
+app.use("/history", historyRoutes);
 
-// Global error handler
+// global error handler (after routes)
 app.use(errorHandler);
 
-app.listen(config.port, () => {
-  console.log(`🚀 Server running on http://localhost:${config.port}`);
-});
+// start server after DB connects
+async function start() {
+  try {
+    const uri =
+      process.env.MONGO_URI || "mongodb://127.0.0.1:27017/factcheckdb";
+    await connectDB(uri);
+    const port = config.port || process.env.PORT || 8080;
+    app.listen(port, () => {
+      console.log(`🚀 Server running on http://localhost:${port}`);
+    });
+  } catch (err) {
+    console.error("Failed to start server:", err);
+    process.exit(1);
+  }
+}
+
+start();
+
+// export for tests (optional)
+module.exports = app;
